@@ -1,4 +1,4 @@
-import { Animated, Text, Image, StyleSheet } from "react-native";
+import { Animated, Image, StyleSheet, View } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
 export default function PokemonCard({
@@ -10,13 +10,26 @@ export default function PokemonCard({
 }) {
     return (
         <Animated.View style={styles.container}>
-            <RectButton style={styles.button}>
-                <Text style={styles.pokemonName}>{pokemonName}</Text>
-                <Text style={styles.pokedexNumber}>#{pokemonDexNumber}</Text>
+            <RectButton style={[styles.button, { backgroundColor: bgColor }]}>
+                <Animated.Text style={styles.pokemonName}>
+                    {pokemonName}
+                </Animated.Text>
+                <Animated.Text style={styles.pokedexNumber}>
+                    #{pokemonDexNumber}
+                </Animated.Text>
                 <Image
                     style={styles.pokemonImage}
                     source={{ uri: pokemonImage }}
                 />
+                {pokemonTypes.map((pokemonType) => (
+                    <View key={pokemonType} style={styles.pokemonTypesWrapper}>
+                        <View style={styles.pokemonType}>
+                            <Animated.Text style={styles.pokemonTypeText}>
+                                {pokemonType}
+                            </Animated.Text>
+                        </View>
+                    </View>
+                ))}
             </RectButton>
         </Animated.View>
     );
@@ -27,7 +40,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button: {
-        backgroundColor: "#fff",
         height: 110,
         margin: 10,
         padding: 16,
@@ -43,7 +55,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     pokemonName: {
-        color: "#000",
+        color: "#fff",
         fontWeight: "bold",
         alignSelf: "flex-start",
     },
@@ -55,10 +67,28 @@ const styles = StyleSheet.create({
         height: 72,
     },
     pokedexNumber: {
-        color: "#000",
+        color: "#767676",
         fontSize: 10,
         position: "absolute",
         right: 10,
         top: 10,
+    },
+    pokemonTypesWrapper: {
+        flexDirection: "column",
+        alignItems: "flex-start",
+    },
+    pokemonType: {
+        backgroundColor: "#ffffff30",
+        paddingVertical: 4,
+        paddingHorizontal: 12,
+        borderRadius: 16,
+        marginRight: 8,
+        marginTop: 4,
+    },
+    pokemonTypeText: {
+        color: "#fff",
+        fontSize: 8,
+        lineHeight: 10,
+        fontWeight: "bold",
     },
 });
