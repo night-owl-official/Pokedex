@@ -10,8 +10,23 @@ const Stack = createStackNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{
+                        title: "POKEDEX",
+                        headerTitleAlign: "center",
+                        headerTitleStyle: {
+                            fontSize: 28,
+                            fontWeight: "bold",
+                            color: "#F1869A",
+                        },
+                        headerStyle: {
+                            backgroundColor: "transparent",
+                        },
+                    }}
+                />
                 <Stack.Screen name="Details" component={DetailScreen} />
             </Stack.Navigator>
         </NavigationContainer>
