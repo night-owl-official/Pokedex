@@ -23,8 +23,9 @@ export default function App() {
                             color: "#F1869A",
                         },
                         headerStyle: {
-                            backgroundColor: "transparent",
+                            backgroundColor: "#fff",
                         },
+                        headerShadowVisible: false,
                     }}
                 />
                 <Stack.Screen name="Details" component={DetailScreen} />
