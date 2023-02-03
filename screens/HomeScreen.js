@@ -18,7 +18,7 @@ const TempData = [
     { id: 12, text: "Pokemon 4" },
 ];
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
@@ -36,6 +36,7 @@ export default function HomeScreen() {
                         }
                         pokemonTypes={["Type 1", "Type 2"]}
                         bgColor={"#F95D5E"}
+                        onPress={() => navigation.navigate("Details")}
                     />
                 )}
                 numColumns={2}

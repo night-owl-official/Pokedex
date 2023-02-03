@@ -7,10 +7,14 @@ export default function PokemonCard({
     pokemonTypes,
     pokemonImage,
     bgColor,
+    onPress,
 }) {
     return (
         <Animated.View style={styles.container}>
-            <RectButton style={[styles.button, { backgroundColor: bgColor }]}>
+            <RectButton
+                style={[styles.button, { backgroundColor: bgColor }]}
+                onPress={onPress}
+            >
                 <Animated.Text style={styles.pokemonName}>
                     {pokemonName}
                 </Animated.Text>
