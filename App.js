@@ -28,7 +28,20 @@ export default function App() {
                         headerShadowVisible: false,
                     }}
                 />
-                <Stack.Screen name="Details" component={DetailScreen} />
+                <Stack.Screen
+                    name="Details"
+                    component={DetailScreen}
+                    options={{
+                        title: "",
+                        headerTitleAlign: "center",
+                        headerShadowVisible: false,
+                        headerBackTitleVisible: false,
+                        headerTintColor: "#fff",
+                        headerStyle: {
+                            backgroundColor: "#F95D5E",
+                        },
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
