@@ -14,13 +14,23 @@ export default function PokemonCard({
                 <Animated.Text style={styles.pokemonName}>
                     {pokemonName}
                 </Animated.Text>
+
                 <Animated.Text style={styles.pokedexNumber}>
                     #{pokemonDexNumber}
                 </Animated.Text>
+
                 <Image
                     style={styles.pokemonImage}
                     source={{ uri: pokemonImage }}
                 />
+
+                <Animated.View style={styles.pokeballImageWrapper}>
+                    <Image
+                        style={styles.pokeballImage}
+                        source={require("../assets/pokeball.png")}
+                    />
+                </Animated.View>
+
                 {pokemonTypes.map((pokemonType) => (
                     <View key={pokemonType} style={styles.pokemonTypesWrapper}>
                         <View style={styles.pokemonType}>
@@ -67,11 +77,22 @@ const styles = StyleSheet.create({
         height: 72,
     },
     pokedexNumber: {
-        color: "#767676",
+        color: "#ffffff90",
         fontSize: 10,
         position: "absolute",
         right: 10,
         top: 10,
+    },
+    pokeballImageWrapper: {
+        zIndex: -1,
+        position: "absolute",
+        right: -8,
+        bottom: -8,
+    },
+    pokeballImage: {
+        width: 80,
+        height: 80,
+        tintColor: "#ffffff20",
     },
     pokemonTypesWrapper: {
         flexDirection: "column",
