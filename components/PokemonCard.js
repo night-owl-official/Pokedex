@@ -35,8 +35,8 @@ export default function PokemonCard({
                     />
                 </Animated.View>
 
-                {pokemonTypes.map((pokemonType) => (
-                    <View key={pokemonType} style={styles.pokemonTypesWrapper}>
+                {pokemonTypes.map((pokemonType, index) => (
+                    <View key={index} style={styles.pokemonTypesWrapper}>
                         <View style={styles.pokemonType}>
                             <Animated.Text style={styles.pokemonTypeText}>
                                 {pokemonType}
