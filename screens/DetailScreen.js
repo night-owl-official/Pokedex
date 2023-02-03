@@ -3,13 +3,13 @@ import { View, Animated, StyleSheet } from "react-native";
 
 import PokemonSummary from "../components/PokemonSummary";
 
-export default function DetailScreen() {
+export default function DetailScreen({ route }) {
     return (
         <View style={styles.container}>
             <StatusBar style="light" />
 
             <View>
-                <PokemonSummary />
+                <PokemonSummary pokemonData={route.params.pokemonData} />
             </View>
         </View>
     );
