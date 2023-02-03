@@ -49,6 +49,13 @@ export default function PokemonSummary({ pokemonData }) {
                         </Animated.View>
                     </View>
                 </View>
+
+                <Animated.View style={styles.pokemonImageWrapper}>
+                    <Image
+                        style={styles.pokemonImage}
+                        source={{ uri: pokemonData.image }}
+                    />
+                </Animated.View>
             </Animated.View>
         </>
     );
@@ -114,5 +121,13 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 14,
         lineHeight: 18,
+    },
+    pokemonImageWrapper: {
+        marginTop: 24,
+        alignItems: "center",
+    },
+    pokemonImage: {
+        width: 256,
+        height: 256,
     },
 });
