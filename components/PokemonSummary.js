@@ -1,6 +1,6 @@
 import { Animated, View, Image, StyleSheet } from "react-native";
 
-export default function PokemonSummary() {
+export default function PokemonSummary({ pokemonData }) {
     return (
         <>
             <Animated.View style={styles.pokeballImageWrapper}>
@@ -14,12 +14,37 @@ export default function PokemonSummary() {
                 <View style={styles.pokemonSummaryHeader}>
                     <View style={styles.pokemonSummaryRow}>
                         <Animated.Text style={styles.pokemonName}>
-                            Pokemon 1
+                            {pokemonData.name}
                         </Animated.Text>
 
                         <Animated.View>
                             <Animated.Text style={styles.pokemonDexNumber}>
-                                #6
+                                #{pokemonData.dexNumber}
+                            </Animated.Text>
+                        </Animated.View>
+                    </View>
+
+                    <View style={[styles.pokemonSummaryRow, { marginTop: 16 }]}>
+                        <View style={{ flexDirection: "row" }}>
+                            {pokemonData.types.map((type, index) => (
+                                <View
+                                    key={index}
+                                    style={styles.pokemonTypesWrapper}
+                                >
+                                    <View style={styles.pokemonType}>
+                                        <Animated.Text
+                                            style={styles.pokemonTypeText}
+                                        >
+                                            {type}
+                                        </Animated.Text>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+
+                        <Animated.View>
+                            <Animated.Text style={styles.pokemonGeneraText}>
+                                {pokemonData.genera}
                             </Animated.Text>
                         </Animated.View>
                     </View>
@@ -68,5 +93,26 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 22,
         fontWeight: "bold",
+    },
+    pokemonTypesWrapper: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    pokemonType: {
+        backgroundColor: "#ffffff30",
+        paddingVertical: 6,
+        paddingHorizontal: 28,
+        borderRadius: 16,
+        marginRight: 8,
+    },
+    pokemonTypeText: {
+        color: "#fff",
+        fontSize: 12,
+        lineHeight: 18,
+    },
+    pokemonGeneraText: {
+        color: "#fff",
+        fontSize: 14,
+        lineHeight: 18,
     },
 });
