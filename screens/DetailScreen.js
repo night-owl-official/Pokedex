@@ -1,12 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import { View, Animated, StyleSheet } from "react-native";
 
+import PokemonSummary from "../components/PokemonSummary";
+
 export default function DetailScreen() {
     return (
         <View style={styles.container}>
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
 
-            <View></View>
+            <View>
+                <PokemonSummary />
+            </View>
         </View>
     );
 }
