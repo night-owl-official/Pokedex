@@ -1,11 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text } from "react-native";
+import { View, Animated, StyleSheet } from "react-native";
 
 export default function DetailScreen() {
     return (
-        <View>
+        <View style={styles.container}>
             <StatusBar style="auto" />
-            <Text>Detail Screen</Text>
+
+            <View></View>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#F95D5E",
+    },
+    detailsContainer: {
+        flex: 1,
+    },
+});
