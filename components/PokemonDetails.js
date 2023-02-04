@@ -34,7 +34,11 @@ export default function PokemonDetails({ pokemonData }) {
                         </Animated.Text>
                     </TouchableOpacity>
                 ))}
+
+                <Animated.View style={styles.tabSelectedIndicator} />
             </View>
+            {/* TODO: Add Animated.Scrollview wrapping a View which wraps a Slide
+             e.g. About, Base Stats, etc. */}
         </Animated.View>
     );
 }
@@ -72,5 +76,16 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 14,
         lineHeight: 18,
+    },
+    tabSelectedIndicator: {
+        position: "absolute",
+        bottom: -1,
+        height: 2,
+        width: TAB_BUTTON_WIDTH,
+        backgroundColor: "#0055D4",
+    },
+    slideWrapper: {
+        width: width,
+        padding: 24,
     },
 });
