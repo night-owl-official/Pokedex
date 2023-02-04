@@ -19,31 +19,31 @@ import PokemonDetails from "../components/PokemonDetails";
 
 const POKEMON_SUMMARY_HEIGHT = 360;
 
-function GetPanGesture(transY) {
+export default function DetailScreen({ route }) {
+    ///////////// Bottom Sheet Animation /////////////
+    const translateY = useSharedValue(0);
     const context = useSharedValue({ y: 0 });
 
     const scrollTo = useCallback((destination) => {
         "worklet";
-        transY.value = withSpring(destination, { damping: 50 });
+        translateY.value = withSpring(destination, { damping: 50 });
     }, []);
 
-    return Gesture.Pan()
+    const panGesture = Gesture.Pan()
         .onStart(() => {
-            context.value = { y: transY.value };
+            context.value = { y: translateY.value };
         })
         .onUpdate((event) => {
-            transY.value = event.translationY + context.value.y;
+            translateY.value = event.translationY + context.value.y;
         })
         .onEnd(() => {
-            if (transY.value < -100) scrollTo(-POKEMON_SUMMARY_HEIGHT);
+            if (translateY.value < -100) scrollTo(-POKEMON_SUMMARY_HEIGHT);
             else scrollTo(0);
         });
-}
 
-function GetDetailsContainerAnimatedStyle(transY) {
-    return useAnimatedStyle(() => {
+    const detailsContainerStyle = useAnimatedStyle(() => {
         const yTranslate = interpolate(
-            transY.value,
+            translateY.value,
             [-POKEMON_SUMMARY_HEIGHT, 0, 200],
             [-POKEMON_SUMMARY_HEIGHT, 0, 50],
             Extrapolate.CLAMP
@@ -53,13 +53,7 @@ function GetDetailsContainerAnimatedStyle(transY) {
             transform: [{ translateY: yTranslate }],
         };
     });
-}
-
-export default function DetailScreen({ route }) {
-    const translateY = useSharedValue(0);
-
-    const panGesture = GetPanGesture(translateY);
-    const detailsContainerStyle = GetDetailsContainerAnimatedStyle(translateY);
+    ////////////////////////////////////////////////////
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -78,6 +72,7 @@ export default function DetailScreen({ route }) {
                         >
                             <PokemonDetails
                                 pokemonData={route.params.pokemonData}
+                                translateY={translateY}
                             />
                         </Animated.View>
                     </GestureDetector>

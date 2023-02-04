@@ -1,19 +1,20 @@
-import {
-    StyleSheet,
-    Animated,
-    View,
-    Dimensions,
-    TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { useHeaderHeight } from "@react-navigation/elements";
+import Animated, {
+    useAnimatedStyle,
+    interpolate,
+    Extrapolate,
+} from "react-native-reanimated";
 
 const { height, width } = Dimensions.get("window");
 const TAB_BUTTON_WIDTH = (width - 48) / 4;
+const POKEMON_SUMMARY_HEIGHT = 360;
 let headerHeight = 0;
 
-export default function PokemonDetails({ pokemonData }) {
+export default function PokemonDetails({ pokemonData, translateY }) {
     headerHeight = useHeaderHeight();
+
     const tabs = [
         { name: "About" },
         { name: "Base Stats" },
@@ -21,8 +22,21 @@ export default function PokemonDetails({ pokemonData }) {
         { name: "Moves" },
     ];
 
+    const containerAnimatedStyle = useAnimatedStyle(() => {
+        const yTranslate = interpolate(
+            translateY.value,
+            [-POKEMON_SUMMARY_HEIGHT, 0],
+            [0, -32],
+            Extrapolate.CLAMP
+        );
+
+        return {
+            transform: [{ translateY: yTranslate }],
+        };
+    });
+
     return (
-        <Animated.View style={styles.container}>
+        <Animated.View style={[styles.container, containerAnimatedStyle]}>
             <View style={styles.tabs}>
                 {tabs.map((tab, index) => (
                     <TouchableOpacity
