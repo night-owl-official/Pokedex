@@ -1,16 +1,40 @@
-import { StyleSheet, Animated, View, Dimensions } from "react-native";
+import {
+    StyleSheet,
+    Animated,
+    View,
+    Dimensions,
+    TouchableOpacity,
+} from "react-native";
 import Constants from "expo-constants";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 const { height, width } = Dimensions.get("window");
+const TAB_BUTTON_WIDTH = (width - 48) / 4;
 let headerHeight = 0;
 
 export default function PokemonDetails({ pokemonData }) {
     headerHeight = useHeaderHeight();
+    const tabs = [
+        { name: "About" },
+        { name: "Base Stats" },
+        { name: "Evolutions" },
+        { name: "Moves" },
+    ];
 
     return (
         <Animated.View style={styles.container}>
-            <View style={styles.tabs}></View>
+            <View style={styles.tabs}>
+                {tabs.map((tab, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={styles.tabButtonWrapper}
+                    >
+                        <Animated.Text style={styles.tabText}>
+                            {tab.name}
+                        </Animated.Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
         </Animated.View>
     );
 }
@@ -36,5 +60,17 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderStyle: "solid",
         borderColor: "#E7E7E8",
+    },
+    tabButtonWrapper: {
+        height: 24,
+        width: TAB_BUTTON_WIDTH,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    tabText: {
+        color: "#919191",
+        fontWeight: "bold",
+        fontSize: 14,
+        lineHeight: 18,
     },
 });
