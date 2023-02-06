@@ -1,6 +1,65 @@
-import { Animated, View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
+import Animated, {
+    useAnimatedStyle,
+    interpolate,
+    Extrapolate,
+} from "react-native-reanimated";
 
-export default function PokemonSummary({ pokemonData }) {
+const POKEMON_SUMMARY_HEIGHT = 360;
+
+export default function PokemonSummary({ pokemonData, translateY }) {
+    ///////////// Summary View Animation /////////////
+    const animatedSummaryStyle = useAnimatedStyle(() => {
+        const zIndex = interpolate(
+            translateY.value,
+            [-POKEMON_SUMMARY_HEIGHT, 0],
+            [0, 1],
+            Extrapolate.CLAMP
+        );
+        const opacity = interpolate(
+            translateY.value,
+            [-200, 0],
+            [0, 1],
+            Extrapolate.CLAMP
+        );
+
+        return {
+            zIndex: zIndex,
+            opacity: opacity,
+        };
+    });
+    ////////////////////////////////////////////////////
+
+    ///////////// Image Wrapper Animation /////////////
+    const animatedImageWrapperStyle = useAnimatedStyle(() => {
+        const opacity = interpolate(
+            translateY.value,
+            [-100, 0],
+            [0, 1],
+            Extrapolate.CLAMP
+        );
+
+        const yTranslate = interpolate(
+            translateY.value,
+            [-100, 0, 200],
+            [-20, 0, 25],
+            Extrapolate.CLAMP
+        );
+
+        const scale = interpolate(
+            translateY.value,
+            [-100, 0, 200],
+            [0.9, 1, 1.1],
+            Extrapolate.CLAMP
+        );
+
+        return {
+            opacity: opacity,
+            transform: [{ translateY: yTranslate }, { scale: scale }],
+        };
+    });
+    ////////////////////////////////////////////////////
+
     return (
         <>
             <Animated.View style={styles.pokeballImageWrapper}>
@@ -10,7 +69,9 @@ export default function PokemonSummary({ pokemonData }) {
                 />
             </Animated.View>
 
-            <Animated.View style={styles.pokemonSummary}>
+            <Animated.View
+                style={[styles.pokemonSummary, animatedSummaryStyle]}
+            >
                 <View style={styles.pokemonSummaryHeader}>
                     <View style={styles.pokemonSummaryRow}>
                         <Animated.Text style={styles.pokemonName}>
@@ -50,7 +111,12 @@ export default function PokemonSummary({ pokemonData }) {
                     </View>
                 </View>
 
-                <Animated.View style={styles.pokemonImageWrapper}>
+                <Animated.View
+                    style={[
+                        styles.pokemonImageWrapper,
+                        animatedImageWrapperStyle,
+                    ]}
+                >
                     <Image
                         style={styles.pokemonImage}
                         source={{ uri: pokemonData.image }}

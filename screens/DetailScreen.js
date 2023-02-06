@@ -61,7 +61,10 @@ export default function DetailScreen({ route }) {
                 <StatusBar style="light" />
 
                 <View>
-                    <PokemonSummary pokemonData={route.params.pokemonData} />
+                    <PokemonSummary
+                        pokemonData={route.params.pokemonData}
+                        translateY={translateY}
+                    />
 
                     <GestureDetector gesture={panGesture}>
                         <Animated.View
