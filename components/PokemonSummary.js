@@ -4,6 +4,8 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withTiming,
+    withDelay,
+    withRepeat,
     interpolate,
     Extrapolate,
     Easing,
@@ -15,14 +17,61 @@ export default function PokemonSummary({ pokemonData, translateY }) {
     const dexNumberTranslateX = useSharedValue(100);
     const generaTranslateX = useSharedValue(200);
 
+    // Pokeball Animation
+    const pokeballOpacity = useSharedValue(0);
+    const pokeballRotation = useSharedValue(0);
+
     useEffect(() => {
         dexNumberTranslateX.value = withTiming(0, { duration: 300 });
-        generaTranslateX.value = withTiming(
-            0,
-            { duration: 350 },
-            Easing.inOut(Easing.quad)
+        generaTranslateX.value = withTiming(0, {
+            duration: 350,
+            easing: Easing.inOut(Easing.quad),
+        });
+
+        // Pokeball Animation
+        pokeballOpacity.value = withDelay(
+            200,
+            withTiming(1, { duration: 350, easing: Easing.inOut(Easing.quad) })
         );
-    }, [dexNumberTranslateX, generaTranslateX]);
+
+        pokeballRotation.value = withRepeat(
+            withTiming(360, { duration: 4500, easing: Easing.linear }),
+            -1,
+            false
+        );
+    }, [
+        dexNumberTranslateX,
+        generaTranslateX,
+        pokeballOpacity,
+        pokeballRotation,
+    ]);
+
+    ///////////// Pokeball Wrapper Animation /////////////
+    const pokeballWrapperAnimatedStyle = useAnimatedStyle(() => {
+        const opacity = interpolate(
+            pokeballOpacity.value,
+            [0, 1],
+            [0, 1],
+            Extrapolate.CLAMP
+        );
+
+        const rotate = interpolate(
+            pokeballRotation.value,
+            [0, 360],
+            [0, 360],
+            Extrapolate.CLAMP
+        );
+
+        return {
+            opacity: opacity,
+            transform: [
+                {
+                    rotate: `${rotate}deg`,
+                },
+            ],
+        };
+    });
+    /////////////////////////////////////////////////////
 
     ///////////// Dex Number View Animation /////////////
     const dexNumberAnimatedStyle = useAnimatedStyle(() => {
@@ -108,7 +157,12 @@ export default function PokemonSummary({ pokemonData, translateY }) {
 
     return (
         <>
-            <Animated.View style={styles.pokeballImageWrapper}>
+            <Animated.View
+                style={[
+                    styles.pokeballImageWrapper,
+                    pokeballWrapperAnimatedStyle,
+                ]}
+            >
                 <Image
                     style={styles.pokeballImage}
                     source={require("../assets/pokeball.png")}
