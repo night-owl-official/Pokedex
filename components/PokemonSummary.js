@@ -1,13 +1,59 @@
+import React, { useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import Animated, {
     useAnimatedStyle,
+    useSharedValue,
+    withTiming,
     interpolate,
     Extrapolate,
+    Easing,
 } from "react-native-reanimated";
 
 const POKEMON_SUMMARY_HEIGHT = 360;
 
 export default function PokemonSummary({ pokemonData, translateY }) {
+    const dexNumberTranslateX = useSharedValue(100);
+    const generaTranslateX = useSharedValue(200);
+
+    useEffect(() => {
+        dexNumberTranslateX.value = withTiming(0, { duration: 300 });
+        generaTranslateX.value = withTiming(
+            0,
+            { duration: 350 },
+            Easing.inOut(Easing.quad)
+        );
+    }, [dexNumberTranslateX, generaTranslateX]);
+
+    ///////////// Dex Number View Animation /////////////
+    const dexNumberAnimatedStyle = useAnimatedStyle(() => {
+        const xTranslate = interpolate(
+            dexNumberTranslateX.value,
+            [0, 100],
+            [0, 100],
+            Extrapolate.CLAMP
+        );
+
+        return {
+            transform: [{ translateX: xTranslate }],
+        };
+    });
+    ////////////////////////////////////////////////////
+
+    ///////////// Genera View Animation /////////////
+    const generaAnimatedStyle = useAnimatedStyle(() => {
+        const xTranslate = interpolate(
+            generaTranslateX.value,
+            [0, 200],
+            [0, 200],
+            Extrapolate.CLAMP
+        );
+
+        return {
+            transform: [{ translateX: xTranslate }],
+        };
+    });
+    ////////////////////////////////////////////////////
+
     ///////////// Summary View Animation /////////////
     const animatedSummaryStyle = useAnimatedStyle(() => {
         const zIndex = interpolate(
@@ -78,7 +124,7 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                             {pokemonData.name}
                         </Animated.Text>
 
-                        <Animated.View>
+                        <Animated.View style={dexNumberAnimatedStyle}>
                             <Animated.Text style={styles.pokemonDexNumber}>
                                 #{pokemonData.dexNumber}
                             </Animated.Text>
@@ -103,7 +149,7 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                             ))}
                         </View>
 
-                        <Animated.View>
+                        <Animated.View style={generaAnimatedStyle}>
                             <Animated.Text style={styles.pokemonGeneraText}>
                                 {pokemonData.genera}
                             </Animated.Text>
