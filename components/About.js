@@ -1,9 +1,12 @@
-import { StyleSheet, View, Animated } from "react-native";
+import { StyleSheet, View, Animated, ScrollView } from "react-native";
 import { Foundation as Icon } from "@expo/vector-icons";
 
 export default function About({ pokemonData }) {
     return (
-        <>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ height: "100%", overflow: "visible" }}
+        >
             {/* Description */}
             <View style={styles.section}>
                 <Animated.Text>{pokemonData.description}</Animated.Text>
@@ -172,7 +175,7 @@ export default function About({ pokemonData }) {
                     </Animated.Text>
                 </View>
             </View>
-        </>
+        </ScrollView>
     );
 }
 
