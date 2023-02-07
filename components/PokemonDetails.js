@@ -2,8 +2,11 @@ import { StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
 import Constants from "expo-constants";
 import { useHeaderHeight } from "@react-navigation/elements";
 import Animated, {
+    useSharedValue,
     useAnimatedStyle,
+    useAnimatedScrollHandler,
     interpolate,
+    interpolateColor,
     Extrapolate,
 } from "react-native-reanimated";
 
@@ -22,6 +25,13 @@ export default function PokemonDetails({ pokemonData, translateY }) {
         { name: "Moves" },
     ];
 
+    const translateX = useSharedValue(0);
+
+    const scrollHandler = useAnimatedScrollHandler((event) => {
+        translateX.value = event.contentOffset.x;
+    }, []);
+
+    ///////////// Bottom Sheet Animation /////////////
     const containerAnimatedStyle = useAnimatedStyle(() => {
         const yTranslate = interpolate(
             translateY.value,
@@ -34,25 +44,89 @@ export default function PokemonDetails({ pokemonData, translateY }) {
             transform: [{ translateY: yTranslate }],
         };
     });
+    /////////////////////////////////////////////////////
+
+    ///////////// Select Indicator Animation /////////////
+    const tabSelectedIndicatorAnimatedStyle = useAnimatedStyle(() => {
+        const xTranslate = interpolate(
+            translateX.value,
+            tabs.map((_, index) => width * index),
+            tabs.map((_, index) => TAB_BUTTON_WIDTH * index),
+            Extrapolate.CLAMP
+        );
+
+        return {
+            transform: [{ translateX: xTranslate }],
+        };
+    });
+    /////////////////////////////////////////////////////
 
     return (
         <Animated.View style={[styles.container, containerAnimatedStyle]}>
             <View style={styles.tabs}>
-                {tabs.map((tab, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={styles.tabButtonWrapper}
-                    >
-                        <Animated.Text style={styles.tabText}>
-                            {tab.name}
-                        </Animated.Text>
-                    </TouchableOpacity>
-                ))}
+                {tabs.map((tab, index) => {
+                    const tabTextAnimatedStyle = useAnimatedStyle(() => {
+                        const color = interpolateColor(
+                            translateX.value,
+                            [
+                                (index - 1) * width,
+                                index * width,
+                                (index + 1) * width,
+                            ],
+                            ["#919191", "#000", "#919191"],
+                            "RGB"
+                        );
 
-                <Animated.View style={styles.tabSelectedIndicator} />
+                        return {
+                            color: color,
+                        };
+                    });
+
+                    return (
+                        <TouchableOpacity
+                            key={index}
+                            style={styles.tabButtonWrapper}
+                        >
+                            <Animated.Text
+                                style={[styles.tabText, tabTextAnimatedStyle]}
+                            >
+                                {tab.name}
+                            </Animated.Text>
+                        </TouchableOpacity>
+                    );
+                })}
+
+                <Animated.View
+                    style={[
+                        styles.tabSelectedIndicator,
+                        tabSelectedIndicatorAnimatedStyle,
+                    ]}
+                />
             </View>
-            {/* TODO: Add Animated.Scrollview wrapping a View which wraps a Slide
-             e.g. About, Base Stats, etc. */}
+
+            <Animated.ScrollView
+                onScroll={scrollHandler}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled={true}
+                bounces={false}
+            >
+                {tabs.map((tab, index) => (
+                    <View key={index} style={styles.slideWrapper}>
+                        {/* Temporary Filler Components */}
+                        <View
+                            style={{
+                                flex: 1,
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Animated.Text>{tab.name}</Animated.Text>
+                        </View>
+                        {/* *************************** */}
+                    </View>
+                ))}
+            </Animated.ScrollView>
         </Animated.View>
     );
 }
