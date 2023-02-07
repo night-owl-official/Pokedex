@@ -13,6 +13,11 @@ import Animated, {
     Extrapolate,
 } from "react-native-reanimated";
 
+import About from "./About";
+import BaseStats from "./BaseStats";
+import Evolutions from "./Evolutions";
+import Moves from "./Moves";
+
 const { height, width } = Dimensions.get("window");
 const TAB_BUTTON_WIDTH = (width - 48) / 4;
 const POKEMON_SUMMARY_HEIGHT = 360;
@@ -22,10 +27,10 @@ export default function PokemonDetails({ pokemonData, translateY }) {
     headerHeight = useHeaderHeight();
 
     const tabs = [
-        { name: "About" },
-        { name: "Base Stats" },
-        { name: "Evolutions" },
-        { name: "Moves" },
+        { name: "About", slide: About },
+        { name: "Base Stats", slide: BaseStats },
+        { name: "Evolutions", slide: Evolutions },
+        { name: "Moves", slide: Moves },
     ];
 
     const translateX = useSharedValue(0);
@@ -123,21 +128,15 @@ export default function PokemonDetails({ pokemonData, translateY }) {
                 pagingEnabled={true}
                 bounces={false}
             >
-                {tabs.map((tab, index) => (
-                    <View key={index} style={styles.slideWrapper}>
-                        {/* Temporary Filler Components */}
-                        <View
-                            style={{
-                                flex: 1,
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <Animated.Text>{tab.name}</Animated.Text>
+                {tabs.map((tab, index) => {
+                    const Tab = tab.slide;
+
+                    return (
+                        <View key={index} style={styles.tabWrapper}>
+                            <Tab pokemonData={pokemonData} />
                         </View>
-                        {/* *************************** */}
-                    </View>
-                ))}
+                    );
+                })}
             </Animated.ScrollView>
         </Animated.View>
     );
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
         width: TAB_BUTTON_WIDTH,
         backgroundColor: "#0055D4",
     },
-    slideWrapper: {
+    tabWrapper: {
         width: width,
         padding: 24,
     },
