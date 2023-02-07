@@ -1,4 +1,10 @@
-import { StyleSheet, View, Animated, ScrollView } from "react-native";
+import {
+    StyleSheet,
+    View,
+    Animated,
+    ScrollView,
+    TouchableOpacity,
+} from "react-native";
 import { Foundation as Icon } from "@expo/vector-icons";
 
 export default function About({ pokemonData }) {
@@ -18,7 +24,7 @@ export default function About({ pokemonData }) {
                 <View style={styles.shadowContainer}>
                     {/* Height display */}
                     <View>
-                        <Animated.Text style={styles.sizeHeaderText}>
+                        <Animated.Text style={styles.shadowContainerHeaderText}>
                             Height
                         </Animated.Text>
 
@@ -29,7 +35,7 @@ export default function About({ pokemonData }) {
 
                     {/* Weight display */}
                     <View>
-                        <Animated.Text style={styles.sizeHeaderText}>
+                        <Animated.Text style={styles.shadowContainerHeaderText}>
                             Weight
                         </Animated.Text>
 
@@ -175,6 +181,56 @@ export default function About({ pokemonData }) {
                     </Animated.Text>
                 </View>
             </View>
+
+            {/* Abilities */}
+            <View style={styles.section}>
+                {/* Title */}
+                <Animated.Text style={styles.sectionTitle}>
+                    Abilities
+                </Animated.Text>
+
+                {/* Abilities container */}
+                <View style={[styles.shadowContainer, { marginTop: 16 }]}>
+                    {/* Ability display */}
+                    <View>
+                        <Animated.Text style={styles.shadowContainerHeaderText}>
+                            Ability 1
+                        </Animated.Text>
+
+                        <View style={styles.sectionText}>
+                            <Animated.Text>
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Quisque diam tellus,
+                                ullamcorper mollis leo nec, scelerisque tempor
+                                massa.
+                            </Animated.Text>
+                        </View>
+
+                        {/* Ability Buttons */}
+                        <View
+                            style={[
+                                styles.abilityButtonsContainer,
+                                pokemonData.abilities.length < 3
+                                    ? { justifyContent: "space-around" }
+                                    : { justifyContent: "space-between" },
+                            ]}
+                        >
+                            {pokemonData.abilities.map((ability, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.abilityButton}
+                                >
+                                    <Animated.Text
+                                        style={styles.abilityButtonText}
+                                    >
+                                        {ability.type}
+                                    </Animated.Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </View>
+                </View>
+            </View>
         </ScrollView>
     );
 }
@@ -197,7 +253,7 @@ const styles = StyleSheet.create({
         width: 100,
         color: "#919191",
     },
-    sizeHeaderText: {
+    shadowContainerHeaderText: {
         color: "#919191",
         fontWeight: "bold",
         marginBottom: 8,
@@ -220,5 +276,23 @@ const styles = StyleSheet.create({
         shadowRadius: 4.65,
 
         elevation: 5,
+    },
+    abilityButtonsContainer: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 16,
+    },
+    abilityButton: {
+        justifyContent: "center",
+        backgroundColor: "#0055D4",
+        borderRadius: 24,
+        padding: 10,
+    },
+    abilityButtonText: {
+        textAlign: "center",
+        fontWeight: "bold",
+        fontSize: 12,
+        color: "#fff",
     },
 });
