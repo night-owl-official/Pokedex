@@ -119,6 +119,59 @@ export default function About({ pokemonData }) {
                     </Animated.Text>
                 </View>
             </View>
+
+            {/* Training */}
+            <View style={styles.section}>
+                {/* Title */}
+                <Animated.Text style={styles.sectionTitle}>
+                    Training
+                </Animated.Text>
+
+                {/* Base EXP */}
+                <View style={styles.sectionContent}>
+                    {/* Subtitle */}
+                    <Animated.Text style={styles.sectionSubtitle}>
+                        Base EXP
+                    </Animated.Text>
+
+                    {/* Display Base EXP */}
+                    <Animated.Text
+                        style={[styles.sectionText, { marginRight: 8 }]}
+                    >
+                        {pokemonData.baseExp}
+                    </Animated.Text>
+                </View>
+
+                {/* Base Happiness */}
+                <View style={styles.sectionContent}>
+                    {/* Subtitle */}
+                    <Animated.Text style={styles.sectionSubtitle}>
+                        Base Happiness
+                    </Animated.Text>
+
+                    {/* Display Base Happiness */}
+                    <Animated.Text
+                        style={[styles.sectionText, { marginRight: 8 }]}
+                    >
+                        {pokemonData.baseHappiness}
+                    </Animated.Text>
+                </View>
+
+                {/* Capture Rate */}
+                <View style={styles.sectionContent}>
+                    {/* Subtitle */}
+                    <Animated.Text style={styles.sectionSubtitle}>
+                        Capture Rate
+                    </Animated.Text>
+
+                    {/* Display Capture Rate */}
+                    <Animated.Text
+                        style={[styles.sectionText, { marginRight: 8 }]}
+                    >
+                        {pokemonData.captureRate}%
+                    </Animated.Text>
+                </View>
+            </View>
         </>
     );
 }
