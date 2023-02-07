@@ -3,8 +3,11 @@ import Constants from "expo-constants";
 import { useHeaderHeight } from "@react-navigation/elements";
 import Animated, {
     useSharedValue,
+    useDerivedValue,
+    useAnimatedRef,
     useAnimatedStyle,
     useAnimatedScrollHandler,
+    scrollTo,
     interpolate,
     interpolateColor,
     Extrapolate,
@@ -26,6 +29,11 @@ export default function PokemonDetails({ pokemonData, translateY }) {
     ];
 
     const translateX = useSharedValue(0);
+    const scrollRef = useAnimatedRef();
+    const scroll = useSharedValue(0);
+    useDerivedValue(() => {
+        scrollTo(scrollRef, scroll.value * width, 0, true);
+    });
 
     const scrollHandler = useAnimatedScrollHandler((event) => {
         translateX.value = event.contentOffset.x;
@@ -86,6 +94,9 @@ export default function PokemonDetails({ pokemonData, translateY }) {
                         <TouchableOpacity
                             key={index}
                             style={styles.tabButtonWrapper}
+                            onPress={() => {
+                                scroll.value = index;
+                            }}
                         >
                             <Animated.Text
                                 style={[styles.tabText, tabTextAnimatedStyle]}
@@ -105,6 +116,7 @@ export default function PokemonDetails({ pokemonData, translateY }) {
             </View>
 
             <Animated.ScrollView
+                ref={scrollRef}
                 onScroll={scrollHandler}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
