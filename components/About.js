@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import {
     StyleSheet,
     View,
@@ -8,6 +9,19 @@ import {
 import { Foundation as Icon } from "@expo/vector-icons";
 
 export default function About({ pokemonData }) {
+    const [ability, setAbility] = useState({
+        ...pokemonData.abilities[0],
+    });
+
+    const getPokemonAbilityAtIndex = useCallback(
+        (index) => {
+            setAbility({
+                ...pokemonData.abilities[index],
+            });
+        },
+        [ability]
+    );
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -194,16 +208,11 @@ export default function About({ pokemonData }) {
                     {/* Ability display */}
                     <View>
                         <Animated.Text style={styles.shadowContainerHeaderText}>
-                            Ability 1
+                            {ability.name}
                         </Animated.Text>
 
                         <View style={styles.sectionText}>
-                            <Animated.Text>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Quisque diam tellus,
-                                ullamcorper mollis leo nec, scelerisque tempor
-                                massa.
-                            </Animated.Text>
+                            <Animated.Text>{ability.description}</Animated.Text>
                         </View>
 
                         {/* Ability Buttons */}
@@ -215,15 +224,23 @@ export default function About({ pokemonData }) {
                                     : { justifyContent: "space-between" },
                             ]}
                         >
-                            {pokemonData.abilities.map((ability, index) => (
+                            {pokemonData.abilities.map((ablty, index) => (
                                 <TouchableOpacity
                                     key={index}
-                                    style={styles.abilityButton}
+                                    style={[
+                                        styles.abilityButton,
+                                        ability.type === ablty.type
+                                            ? { backgroundColor: "#0055D4" }
+                                            : { backgroundColor: "#0055D490" },
+                                    ]}
+                                    onPress={() =>
+                                        getPokemonAbilityAtIndex(index)
+                                    }
                                 >
                                     <Animated.Text
                                         style={styles.abilityButtonText}
                                     >
-                                        {ability.type}
+                                        {ablty.type}
                                     </Animated.Text>
                                 </TouchableOpacity>
                             ))}
