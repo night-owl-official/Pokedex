@@ -27,7 +27,7 @@ export default function BaseStats({ pokemonData }) {
                         <View style={styles.statLine}>
                             <Animated.View
                                 style={[
-                                    { width: baseStat.value },
+                                    { width: `${baseStat.value}%` },
                                     baseStat.value >= 50
                                         ? baseStat.value < 60
                                             ? styles.statValueMid
