@@ -39,6 +39,22 @@ export default function BaseStats({ pokemonData }) {
                     </View>
                 </View>
             ))}
+
+            {/* Type Effectiveness */}
+            <View style={styles.typeEffectivenessContainer}>
+                {/* Header */}
+                <View style={styles.typeEffectivenessHeader}>
+                    <Animated.Text style={styles.typeEffectivenessHeaderTitle}>
+                        Type Defenses
+                    </Animated.Text>
+
+                    <Animated.Text
+                        style={styles.typeEffectivenessHeaderSubtitle}
+                    >
+                        The effectiveness of each type on {pokemonData.name}.
+                    </Animated.Text>
+                </View>
+            </View>
         </>
     );
 }
@@ -76,5 +92,32 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         height: 5,
         backgroundColor: "#FA6555",
+    },
+    typeEffectivenessContainer: {
+        flex: 1,
+        marginTop: 24,
+    },
+    typeEffectivenessHeader: {
+        marginBottom: 24,
+    },
+    typeEffectivenessHeaderTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        lineHeight: 22,
+    },
+    typeEffectivenessHeaderSubtitle: {
+        color: "#919191",
+        marginTop: 8,
+    },
+    typeEffectivenessList: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    typeEffectivenessItem: {
+        borderRadius: 16,
+        paddingVertical: 4,
+        paddingHorizontal: 20,
+        marginBottom: 8,
+        marginRight: 8,
     },
 });
