@@ -1,7 +1,7 @@
-import { StyleSheet, View, Animated } from "react-native";
+import { StyleSheet, View, Animated, Image } from "react-native";
 
 import { getColorByType } from "../utils/pokemonTypeColors";
-import { getTypeIconByType, getMoveIconByType } from "../utils/pokemonIcons";
+import { getTypeIconByType } from "../utils/pokemonIcons";
 
 export default function BaseStats({ pokemonData }) {
     return (
@@ -9,20 +9,14 @@ export default function BaseStats({ pokemonData }) {
             {pokemonData.baseStats.map((baseStat, index) => (
                 <View key={index} style={styles.statWrapper}>
                     {/* Stat Name */}
-                    <Animated.Text style={{ color: "#919191", width: 100 }}>
+                    <Animated.Text style={styles.statNameText}>
                         {baseStat.name}
                     </Animated.Text>
 
                     {/* Stat Graph */}
                     <View style={styles.statGraphWrapper}>
                         {/* Number */}
-                        <Animated.Text
-                            style={{
-                                fontWeight: "bold",
-                                textAlign: "right",
-                                width: 30,
-                            }}
-                        >
+                        <Animated.Text style={styles.statValueText}>
                             {baseStat.value}
                         </Animated.Text>
 
@@ -57,6 +51,46 @@ export default function BaseStats({ pokemonData }) {
                         The effectiveness of each type on {pokemonData.name}.
                     </Animated.Text>
                 </View>
+
+                {/* Effectiveness List */}
+                <View style={styles.typeEffectivenessList}>
+                    {pokemonData.typeEffectiveness.map((effect, index) => (
+                        <View
+                            key={index}
+                            style={styles.typeEffectivenessItemWrapper}
+                        >
+                            {/* Background */}
+                            <View
+                                style={[
+                                    styles.typeEffectivenessItem,
+                                    {
+                                        backgroundColor: getColorByType(
+                                            effect.type
+                                        ),
+                                    },
+                                ]}
+                            >
+                                {/* Icon */}
+                                <Image
+                                    style={styles.typeEffectivenessIcon}
+                                    source={getTypeIconByType(effect.type)}
+                                />
+
+                                {/* Type Text */}
+                                <Animated.Text
+                                    style={styles.typeEffectivenessItemText}
+                                >
+                                    {effect.type}
+                                </Animated.Text>
+                            </View>
+
+                            {/* Effectiveness Value */}
+                            <Animated.Text style={styles.typeEffectivenssText}>
+                                {effect.effectiveness}x
+                            </Animated.Text>
+                        </View>
+                    ))}
+                </View>
             </View>
         </>
     );
@@ -72,6 +106,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
+    },
+    statNameText: {
+        color: "#919191",
+        width: 100,
+    },
+    statValueText: {
+        fontWeight: "bold",
+        textAlign: "right",
+        width: 30,
     },
     statLine: {
         flex: 1,
@@ -114,13 +157,36 @@ const styles = StyleSheet.create({
     },
     typeEffectivenessList: {
         flexDirection: "row",
+        justifyContent: "space-between",
         flexWrap: "wrap",
     },
+    typeEffectivenessItemWrapper: {
+        flexDirection: "row",
+        alignItems: "baseline",
+    },
     typeEffectivenessItem: {
+        flexDirection: "row",
+        alignItems: "center",
         borderRadius: 16,
-        paddingVertical: 4,
-        paddingHorizontal: 20,
-        marginBottom: 8,
-        marginRight: 8,
+        paddingVertical: 6,
+        paddingHorizontal: 10,
+        marginBottom: 16,
+        marginRight: 4,
+    },
+    typeEffectivenessIcon: {
+        width: 15,
+        height: 15,
+        marginRight: 6,
+    },
+    typeEffectivenessItemText: {
+        color: "#fff",
+        fontWeight: "bold",
+        fontSize: 12,
+        lineHeight: 18,
+    },
+    typeEffectivenssText: {
+        fontWeight: "bold",
+        fontSize: 12,
+        lineHeight: 18,
     },
 });
