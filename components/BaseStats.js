@@ -1,6 +1,7 @@
 import { StyleSheet, View, Animated } from "react-native";
 
 import { getColorByType } from "../utils/pokemonTypeColors";
+import { getTypeIconByType, getMoveIconByType } from "../utils/pokemonIcons";
 
 export default function BaseStats({ pokemonData }) {
     return (

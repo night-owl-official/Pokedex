@@ -20,5 +20,5 @@ const colors = {
 };
 
 export function getColorByType(type) {
-    return colors.type;
+    return colors[type];
 }
