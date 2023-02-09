@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     moveIconsContainer: {
         flexDirection: "row",
         alignItems: "center",
+        marginLeft: 22,
     },
     moveStatContainer: {
         flexDirection: "column",
@@ -131,5 +132,6 @@ const styles = StyleSheet.create({
     moveIcon: {
         width: 25,
         height: 25,
+        marginHorizontal: 2,
     },
 });
