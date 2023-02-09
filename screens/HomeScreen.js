@@ -66,6 +66,44 @@ const TempData = [
             { type: "dark", effectiveness: 1 },
             { type: "fairy", effectiveness: 0.5 },
         ],
+        moves: [
+            {
+                id: 1,
+                name: "Move 1",
+                description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam tellus, ullamcorper mollis leo nec, scelerisque tempor massa.",
+                learnCondition: "Level 5",
+                power: 50,
+                accuracy: 100,
+                effect: 10,
+                category: "physicalAttack",
+                type: "fire",
+            },
+            {
+                id: 2,
+                name: "Move 2",
+                description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam tellus, ullamcorper mollis leo nec, scelerisque tempor massa.",
+                learnCondition: "Level 16",
+                power: 70,
+                accuracy: 90,
+                effect: 0,
+                category: "specialAttack",
+                type: "dark",
+            },
+            {
+                id: 3,
+                name: "Move 3",
+                description:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque diam tellus, ullamcorper mollis leo nec, scelerisque tempor massa.",
+                learnCondition: "TM",
+                power: 0,
+                accuracy: 80,
+                effect: 0,
+                category: "statusAttack",
+                type: "ghost",
+            },
+        ],
     },
 ];
 
