@@ -165,6 +165,24 @@ export default function About({ pokemonData }) {
                     </Animated.Text>
                 </View>
 
+                {/* EV Yield */}
+                <View style={styles.sectionContent}>
+                    {/* Subtitle */}
+                    <Animated.Text style={styles.sectionSubtitle}>
+                        EV Yield
+                    </Animated.Text>
+
+                    {/* Display EV Yield */}
+                    {pokemonData.evYield.map((ev, index) => (
+                        <Animated.Text
+                            key={index}
+                            style={[styles.sectionText, { marginRight: 16 }]}
+                        >
+                            {ev.value} {ev.stat}
+                        </Animated.Text>
+                    ))}
+                </View>
+
                 {/* Base Happiness */}
                 <View style={styles.sectionContent}>
                     {/* Subtitle */}

@@ -24,6 +24,7 @@ const TempData = [
         eggGroups: ["Monster", "Dragon"],
         baseEggSteps: 5120,
         baseExp: 133,
+        evYield: [{ stat: "Sp. Atk", value: 3 }],
         baseHappiness: 20,
         captureRate: 10,
         abilities: [
