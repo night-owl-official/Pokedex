@@ -17,9 +17,13 @@ import Animated, {
 import PokemonSummary from "../components/PokemonSummary";
 import PokemonDetails from "../components/PokemonDetails";
 
+import { getColorByType } from "../utils/pokemonTypeColors";
+
 const POKEMON_SUMMARY_HEIGHT = 360;
 
 export default function DetailScreen({ route }) {
+    const pokemon = route.params.pokemonData;
+
     ///////////// Bottom Sheet Animation /////////////
     const translateY = useSharedValue(0);
     const context = useSharedValue({ y: 0 });
@@ -57,12 +61,19 @@ export default function DetailScreen({ route }) {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <View style={styles.container}>
+            <View
+                style={[
+                    styles.container,
+                    {
+                        backgroundColor: getColorByType(pokemon.types[0]),
+                    },
+                ]}
+            >
                 <StatusBar style="light" />
 
                 <View>
                     <PokemonSummary
-                        pokemonData={route.params.pokemonData}
+                        pokemonData={pokemon}
                         translateY={translateY}
                     />
 
@@ -74,7 +85,7 @@ export default function DetailScreen({ route }) {
                             ]}
                         >
                             <PokemonDetails
-                                pokemonData={route.params.pokemonData}
+                                pokemonData={pokemon}
                                 translateY={translateY}
                             />
                         </Animated.View>

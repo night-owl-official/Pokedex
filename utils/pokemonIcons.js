@@ -26,7 +26,7 @@ const moveCategoryIcons = {
 };
 
 export function getTypeIconByType(type) {
-    return typeIcons[type];
+    return typeIcons[type.toLowerCase()];
 }
 
 export function getMoveIconByType(type) {

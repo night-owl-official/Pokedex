@@ -3,12 +3,14 @@ import { View, StyleSheet, FlatList } from "react-native";
 
 import PokemonCard from "../components/PokemonCard";
 
+import { getColorByType } from "../utils/pokemonTypeColors";
+
 const TempData = [
     {
         id: 1,
         name: "Pokemon",
         dexNumber: 6,
-        types: ["Type 1", "Type 2"],
+        types: ["Fire", "Flying"],
         image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
         genera: "Genera",
         description:
@@ -116,20 +118,25 @@ export default function HomeScreen({ navigation }) {
                 style={styles.pokemonList}
                 data={TempData}
                 keyExtractor={(data) => data.dexNumber}
-                renderItem={({ item }) => (
-                    <PokemonCard
-                        pokemonName={item.name}
-                        pokemonDexNumber={item.dexNumber}
-                        pokemonImage={item.image}
-                        pokemonTypes={item.types}
-                        bgColor={"#F95D5E"}
-                        onPress={() =>
-                            navigation.navigate("Details", {
-                                pokemonData: item,
-                            })
-                        }
-                    />
-                )}
+                renderItem={({ item }) => {
+                    const bgColor = getColorByType(item.types[0]);
+
+                    return (
+                        <PokemonCard
+                            pokemonName={item.name}
+                            pokemonDexNumber={item.dexNumber}
+                            pokemonImage={item.image}
+                            pokemonTypes={item.types}
+                            bgColor={bgColor}
+                            onPress={() =>
+                                navigation.navigate("Details", {
+                                    pokemonData: item,
+                                    bgColor: bgColor,
+                                })
+                            }
+                        />
+                    );
+                }}
                 numColumns={2}
             />
         </View>

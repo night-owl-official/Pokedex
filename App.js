@@ -31,16 +31,16 @@ export default function App() {
                 <Stack.Screen
                     name="Details"
                     component={DetailScreen}
-                    options={{
+                    options={({ route }) => ({
                         title: "",
                         headerTitleAlign: "center",
                         headerShadowVisible: false,
                         headerBackTitleVisible: false,
                         headerTintColor: "#fff",
                         headerStyle: {
-                            backgroundColor: "#F95D5E",
+                            backgroundColor: route.params.bgColor,
                         },
-                    }}
+                    })}
                 />
             </Stack.Navigator>
         </NavigationContainer>
