@@ -68,6 +68,24 @@ const TempData = [
             { type: "dark", effectiveness: 1 },
             { type: "fairy", effectiveness: 0.5 },
         ],
+        evolutionChain: {
+            base: {
+                name: "Charmander",
+                image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+            },
+            first: [
+                {
+                    name: "Charmeleon",
+                    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
+                    minLevel: 16,
+                },
+            ],
+            second: {
+                name: "Charizard",
+                image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+                minLevel: 36,
+            },
+        },
         moves: [
             {
                 id: 1,
