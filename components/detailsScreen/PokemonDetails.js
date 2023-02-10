@@ -13,10 +13,10 @@ import Animated, {
     Extrapolate,
 } from "react-native-reanimated";
 
-import About from "./tabs/About";
-import BaseStats from "./tabs/BaseStats";
-import Evolutions from "./tabs/Evolutions";
-import Moves from "./tabs/Moves";
+import About from "../tabs/About";
+import BaseStats from "../tabs/BaseStats";
+import Evolutions from "../tabs/Evolutions";
+import Moves from "../tabs/Moves";
 
 const { height, width } = Dimensions.get("window");
 const TAB_BUTTON_WIDTH = (width - 48) / 4;

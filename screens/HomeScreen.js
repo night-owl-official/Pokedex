@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet, FlatList } from "react-native";
 
-import PokemonCard from "../components/PokemonCard";
+import PokemonCard from "../components/homeScreen/PokemonCard";
 
 import { getColorByType } from "../utils/pokemonTypeColors";
 

@@ -31,7 +31,7 @@ export default function PokemonCard({
                 <Animated.View style={styles.pokeballImageWrapper}>
                     <Image
                         style={styles.pokeballImage}
-                        source={require("../assets/pokeball.png")}
+                        source={require("../../assets/pokeball.png")}
                     />
                 </Animated.View>
 

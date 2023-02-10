@@ -14,8 +14,8 @@ import Animated, {
     withSpring,
 } from "react-native-reanimated";
 
-import PokemonSummary from "../components/PokemonSummary";
-import PokemonDetails from "../components/PokemonDetails";
+import PokemonSummary from "../components/detailsScreen/PokemonSummary";
+import PokemonDetails from "../components/detailsScreen/PokemonDetails";
 
 import { getColorByType } from "../utils/pokemonTypeColors";
 

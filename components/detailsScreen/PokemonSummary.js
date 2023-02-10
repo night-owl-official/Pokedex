@@ -165,7 +165,7 @@ export default function PokemonSummary({ pokemonData, translateY }) {
             >
                 <Image
                     style={styles.pokeballImage}
-                    source={require("../assets/pokeball.png")}
+                    source={require("../../assets/pokeball.png")}
                 />
             </Animated.View>
 
