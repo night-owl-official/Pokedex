@@ -1,6 +1,8 @@
 import { View, StyleSheet, Image, Animated } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 
+import Pokeball from "../Pokeball";
+
 export default function Evolutions({ pokemonData }) {
     return (
         <>
@@ -18,14 +20,10 @@ export default function Evolutions({ pokemonData }) {
                             {/* Base Pokemon */}
                             <View style={styles.pokemonContainer}>
                                 {/* Pokeball Image */}
-                                <Animated.View
-                                    style={styles.pokeballBackground}
-                                >
-                                    <Image
-                                        style={styles.pokeballImage}
-                                        source={require("../../assets/pokeball.png")}
-                                    />
-                                </Animated.View>
+                                <Pokeball
+                                    wrapperStyle={styles.pokeballBackground}
+                                    imageStyle={styles.pokeballImage}
+                                />
 
                                 {/* Pokemon Image */}
                                 <Image
@@ -62,14 +60,10 @@ export default function Evolutions({ pokemonData }) {
                             {/* First Pokemon */}
                             <View style={styles.pokemonContainer}>
                                 {/* Pokeball Image */}
-                                <Animated.View
-                                    style={styles.pokeballBackground}
-                                >
-                                    <Image
-                                        style={styles.pokeballImage}
-                                        source={require("../../assets/pokeball.png")}
-                                    />
-                                </Animated.View>
+                                <Pokeball
+                                    wrapperStyle={styles.pokeballBackground}
+                                    imageStyle={styles.pokeballImage}
+                                />
 
                                 {/* Pokemon Image */}
                                 <Image
@@ -94,14 +88,10 @@ export default function Evolutions({ pokemonData }) {
                             {/* First Pokemon */}
                             <View style={styles.pokemonContainer}>
                                 {/* Pokeball Image */}
-                                <Animated.View
-                                    style={styles.pokeballBackground}
-                                >
-                                    <Image
-                                        style={styles.pokeballImage}
-                                        source={require("../../assets/pokeball.png")}
-                                    />
-                                </Animated.View>
+                                <Pokeball
+                                    wrapperStyle={styles.pokeballBackground}
+                                    imageStyle={styles.pokeballImage}
+                                />
 
                                 {/* Pokemon Image */}
                                 <Image
@@ -135,14 +125,10 @@ export default function Evolutions({ pokemonData }) {
                             {/* Second Pokemon */}
                             <View style={styles.pokemonContainer}>
                                 {/* Pokeball Image */}
-                                <Animated.View
-                                    style={styles.pokeballBackground}
-                                >
-                                    <Image
-                                        style={styles.pokeballImage}
-                                        source={require("../../assets/pokeball.png")}
-                                    />
-                                </Animated.View>
+                                <Pokeball
+                                    wrapperStyle={styles.pokeballBackground}
+                                    imageStyle={styles.pokeballImage}
+                                />
 
                                 {/* Pokemon Image */}
                                 <Image

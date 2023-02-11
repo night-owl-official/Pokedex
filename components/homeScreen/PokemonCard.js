@@ -1,6 +1,8 @@
 import { Animated, Image, StyleSheet, View } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
+import Pokeball from "../Pokeball";
+
 export default function PokemonCard({
     pokemonName,
     pokemonDexNumber,
@@ -28,12 +30,10 @@ export default function PokemonCard({
                     source={{ uri: pokemonImage }}
                 />
 
-                <Animated.View style={styles.pokeballImageWrapper}>
-                    <Image
-                        style={styles.pokeballImage}
-                        source={require("../../assets/pokeball.png")}
-                    />
-                </Animated.View>
+                <Pokeball
+                    wrapperStyle={styles.pokeballImageWrapper}
+                    imageStyle={styles.pokeballImage}
+                />
 
                 {pokemonTypes.map((pokemonType, index) => (
                     <View key={index} style={styles.pokemonTypesWrapper}>
