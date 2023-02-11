@@ -61,6 +61,9 @@ export default function DetailScreen({ route }) {
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar style="light" />
+
+            {/* Background */}
             <View
                 style={[
                     styles.container,
@@ -69,8 +72,7 @@ export default function DetailScreen({ route }) {
                     },
                 ]}
             >
-                <StatusBar style="light" />
-
+                {/* Screen Container */}
                 <View>
                     <PokemonSummary
                         pokemonData={pokemon}
@@ -78,6 +80,7 @@ export default function DetailScreen({ route }) {
                     />
 
                     <GestureDetector gesture={panGesture}>
+                        {/* Details Section */}
                         <Animated.View
                             style={[
                                 styles.detailsContainer,

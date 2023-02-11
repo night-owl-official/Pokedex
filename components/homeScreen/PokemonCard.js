@@ -1,7 +1,8 @@
-import { Animated, Image, StyleSheet, View } from "react-native";
+import { Animated, Image, StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
 import Pokeball from "../Pokeball";
+import PokemonTypes from "../PokemonTypes";
 
 export default function PokemonCard({
     pokemonName,
@@ -13,18 +14,22 @@ export default function PokemonCard({
 }) {
     return (
         <Animated.View style={styles.container}>
+            {/* Tappable Button */}
             <RectButton
                 style={[styles.button, { backgroundColor: bgColor }]}
                 onPress={onPress}
             >
+                {/* Pokemon Name */}
                 <Animated.Text style={styles.pokemonName}>
                     {pokemonName}
                 </Animated.Text>
 
+                {/* Pokemon Dex Number */}
                 <Animated.Text style={styles.pokedexNumber}>
                     #{pokemonDexNumber}
                 </Animated.Text>
 
+                {/* Pokemon Image */}
                 <Image
                     style={styles.pokemonImage}
                     source={{ uri: pokemonImage }}
@@ -35,15 +40,14 @@ export default function PokemonCard({
                     imageStyle={styles.pokeballImage}
                 />
 
-                {pokemonTypes.map((pokemonType, index) => (
-                    <View key={index} style={styles.pokemonTypesWrapper}>
-                        <View style={styles.pokemonType}>
-                            <Animated.Text style={styles.pokemonTypeText}>
-                                {pokemonType}
-                            </Animated.Text>
-                        </View>
-                    </View>
-                ))}
+                <PokemonTypes
+                    types={pokemonTypes}
+                    styles={[
+                        styles.pokemonTypesWrapper,
+                        styles.pokemonType,
+                        styles.pokemonTypeText,
+                    ]}
+                />
             </RectButton>
         </Animated.View>
     );

@@ -8,7 +8,9 @@ import Animated, {
     Extrapolate,
     Easing,
 } from "react-native-reanimated";
+
 import Pokeball from "../Pokeball";
+import PokemonTypes from "../PokemonTypes";
 
 const POKEMON_SUMMARY_HEIGHT = 360;
 
@@ -114,15 +116,20 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                 rotating={true}
             />
 
+            {/* Summary */}
             <Animated.View
                 style={[styles.pokemonSummary, animatedSummaryStyle]}
             >
+                {/* Header */}
                 <View style={styles.pokemonSummaryHeader}>
+                    {/* Row */}
                     <View style={styles.pokemonSummaryRow}>
+                        {/* Pokemon Name */}
                         <Animated.Text style={styles.pokemonName}>
                             {pokemonData.name}
                         </Animated.Text>
 
+                        {/* Pokemon Dex Number */}
                         <Animated.View style={dexNumberAnimatedStyle}>
                             <Animated.Text style={styles.pokemonDexNumber}>
                                 #{pokemonData.dexNumber}
@@ -130,24 +137,21 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                         </Animated.View>
                     </View>
 
+                    {/* Row */}
                     <View style={[styles.pokemonSummaryRow, { marginTop: 16 }]}>
+                        {/* Pokemon Types */}
                         <View style={{ flexDirection: "row" }}>
-                            {pokemonData.types.map((type, index) => (
-                                <View
-                                    key={index}
-                                    style={styles.pokemonTypesWrapper}
-                                >
-                                    <View style={styles.pokemonType}>
-                                        <Animated.Text
-                                            style={styles.pokemonTypeText}
-                                        >
-                                            {type}
-                                        </Animated.Text>
-                                    </View>
-                                </View>
-                            ))}
+                            <PokemonTypes
+                                types={pokemonData.types}
+                                styles={[
+                                    styles.pokemonTypesWrapper,
+                                    styles.pokemonType,
+                                    styles.pokemonTypeText,
+                                ]}
+                            />
                         </View>
 
+                        {/* Pokemon Genera */}
                         <Animated.View style={generaAnimatedStyle}>
                             <Animated.Text style={styles.pokemonGeneraText}>
                                 {pokemonData.genera}
@@ -156,6 +160,7 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                     </View>
                 </View>
 
+                {/* Pokemon Image */}
                 <Animated.View
                     style={[
                         styles.pokemonImageWrapper,
