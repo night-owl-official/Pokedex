@@ -6,7 +6,7 @@ export default function Moves({ pokemonData }) {
     return (
         <FlatList
             style={styles.moveList}
-            contentContainerStyle={{ alignItems: "center" }}
+            contentContainerStyle={styles.listContent}
             data={pokemonData.moves}
             keyExtractor={(data) => data.id}
             renderItem={({ item }) => <MoveDisplay move={item} />}
@@ -19,5 +19,8 @@ const styles = StyleSheet.create({
     moveList: {
         height: "100%",
         overflow: "visible",
+    },
+    listContent: {
+        alignItems: "center",
     },
 });
