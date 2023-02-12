@@ -3,10 +3,11 @@ import { StyleSheet, View, Animated, Image } from "react-native";
 import { getMoveIconByType, getTypeIconByType } from "../../utils/pokemonIcons";
 import { getColorByType } from "../../utils/pokemonTypeColors";
 
+import MoveStat from "./MoveStat";
+
 export default function MoveDisplay({ move }) {
     return (
         <View style={styles.shadowContainer}>
-            {/* Move Name */}
             <Animated.Text style={styles.heading}>{move.name}</Animated.Text>
 
             <Animated.Text>{move.description}</Animated.Text>
@@ -17,35 +18,9 @@ export default function MoveDisplay({ move }) {
 
             <View style={styles.moveInfoContainer}>
                 <View style={styles.moveStatsContainer}>
-                    <View style={styles.moveStatContainer}>
-                        <Animated.Text style={styles.moveStatsHeading}>
-                            Power
-                        </Animated.Text>
-
-                        <Animated.Text style={styles.description}>
-                            {move.power === 0 ? "-" : move.power}
-                        </Animated.Text>
-                    </View>
-
-                    <View style={styles.moveStatContainer}>
-                        <Animated.Text style={styles.moveStatsHeading}>
-                            Accuracy
-                        </Animated.Text>
-
-                        <Animated.Text style={styles.description}>
-                            {move.accuracy}
-                        </Animated.Text>
-                    </View>
-
-                    <View style={styles.moveStatContainer}>
-                        <Animated.Text style={styles.moveStatsHeading}>
-                            Effect %
-                        </Animated.Text>
-
-                        <Animated.Text style={styles.description}>
-                            {move.effect === 0 ? "-" : move.effect}
-                        </Animated.Text>
-                    </View>
+                    <MoveStat title={"Power"} value={move.power} />
+                    <MoveStat title={"Accuracy"} value={move.accuracy} />
+                    <MoveStat title={"Effect %"} value={move.effect} />
                 </View>
 
                 {/* Move Icons */}
@@ -95,11 +70,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 8,
     },
-    moveStatsHeading: {
-        color: "#919191",
-        fontWeight: "bold",
-        marginBottom: 4,
-    },
     description: {
         fontWeight: "bold",
     },
@@ -123,11 +93,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginLeft: 22,
-    },
-    moveStatContainer: {
-        flexDirection: "column",
-        alignItems: "center",
-        marginRight: 10,
     },
     moveIcon: {
         width: 25,
