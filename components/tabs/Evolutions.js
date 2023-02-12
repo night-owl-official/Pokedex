@@ -1,4 +1,4 @@
-import { View, StyleSheet, Animated } from "react-native";
+import { View, StyleSheet, Animated, ScrollView } from "react-native";
 
 import EvolutionSection from "../evolutions/EvolutionSection";
 
@@ -12,25 +12,24 @@ export default function Evolutions({ pokemonData }) {
 
             {/* Check if there are any evolutions */}
             {pokemonData.evolutionChain.first ? (
-                <View style={styles.container}>
-                    {/* First Evolution section */}
-                    {pokemonData.evolutionChain.first && (
+                <ScrollView
+                    style={styles.scrollableContainer}
+                    showsVerticalScrollIndicator={false}
+                    scrollEnabled={pokemonData.evolutionChain.first.length > 3}
+                >
+                    {/* First Evolution section (Could have more than one) */}
+                    {pokemonData.evolutionChain.first.map((pokemon, index) => (
                         <EvolutionSection
+                            key={index}
                             firstName={pokemonData.evolutionChain.base.name}
                             firstImageURL={
                                 pokemonData.evolutionChain.base.image
                             }
-                            evolveLevel={
-                                pokemonData.evolutionChain.first[0].minLevel
-                            }
-                            secondName={
-                                pokemonData.evolutionChain.first[0].name
-                            }
-                            secondImageURL={
-                                pokemonData.evolutionChain.first[0].image
-                            }
+                            evolveLevel={pokemon.minLevel}
+                            secondName={pokemon.name}
+                            secondImageURL={pokemon.image}
                         />
-                    )}
+                    ))}
 
                     {/* Second Evolution section */}
                     {pokemonData.evolutionChain.second && (
@@ -48,7 +47,7 @@ export default function Evolutions({ pokemonData }) {
                             }
                         />
                     )}
-                </View>
+                </ScrollView>
             ) : (
                 <View style={styles.container}>
                     <Animated.Text style={styles.noEvolutionsText}>
@@ -63,6 +62,12 @@ export default function Evolutions({ pokemonData }) {
 const styles = StyleSheet.create({
     container: {
         marginTop: 32,
+    },
+    scrollableContainer: {
+        marginTop: 32,
+        height: "100%",
+        overflow: "visible",
+        zIndex: -1,
     },
     titleText: {
         fontWeight: "bold",
