@@ -80,27 +80,14 @@ const TempData = [
                     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
                     minLevel: 16,
                 },
+            ],
+            second: [
                 {
-                    name: "Charmeleon",
-                    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
-                    minLevel: 16,
-                },
-                {
-                    name: "Charmeleon",
-                    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
-                    minLevel: 16,
-                },
-                {
-                    name: "Charmeleon",
-                    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
-                    minLevel: 16,
+                    name: "Charizard",
+                    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+                    minLevel: 36,
                 },
             ],
-            second: {
-                name: "Charizard",
-                image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
-                minLevel: 36,
-            },
         },
         moves: [
             {
