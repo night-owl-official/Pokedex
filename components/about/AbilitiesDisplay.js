@@ -6,15 +6,6 @@ export default function AbilitiesDisplay({ style, abilities }) {
         ...abilities[0],
     });
 
-    const getPokemonAbilityAtIndex = useCallback(
-        (index) => {
-            setAbility({
-                ...abilities[index],
-            });
-        },
-        [ability]
-    );
-
     return (
         <View style={style}>
             {/* Title */}
@@ -50,7 +41,11 @@ export default function AbilitiesDisplay({ style, abilities }) {
                                         ? { backgroundColor: "#0055D4" }
                                         : { backgroundColor: "#0055D490" },
                                 ]}
-                                onPress={() => getPokemonAbilityAtIndex(index)}
+                                onPress={() =>
+                                    setAbility({
+                                        ...abilities[index],
+                                    })
+                                }
                             >
                                 <Animated.Text style={styles.abilityButtonText}>
                                     {ablty.type}

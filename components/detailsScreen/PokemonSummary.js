@@ -19,12 +19,12 @@ export default function PokemonSummary({ pokemonData, translateY }) {
     const generaTranslateX = useSharedValue(200);
 
     useEffect(() => {
-        dexNumberTranslateX.value = withTiming(0, { duration: 300 });
+        dexNumberTranslateX.value = withTiming(0, { duration: 400 });
         generaTranslateX.value = withTiming(0, {
-            duration: 350,
+            duration: 450,
             easing: Easing.inOut(Easing.quad),
         });
-    }, [dexNumberTranslateX, generaTranslateX]);
+    }, []);
 
     ///////////// Dex Number View Animation /////////////
     const dexNumberAnimatedStyle = useAnimatedStyle(() => {

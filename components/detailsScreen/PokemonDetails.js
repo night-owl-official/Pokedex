@@ -23,15 +23,15 @@ const TAB_BUTTON_WIDTH = (width - 48) / 4;
 const POKEMON_SUMMARY_HEIGHT = 360;
 let headerHeight = 0;
 
+const tabs = [
+    { name: "About", slide: About },
+    { name: "Base Stats", slide: BaseStats },
+    { name: "Evolutions", slide: Evolutions },
+    { name: "Moves", slide: Moves },
+];
+
 export default function PokemonDetails({ pokemonData, translateY }) {
     headerHeight = useHeaderHeight();
-
-    const tabs = [
-        { name: "About", slide: About },
-        { name: "Base Stats", slide: BaseStats },
-        { name: "Evolutions", slide: Evolutions },
-        { name: "Moves", slide: Moves },
-    ];
 
     const translateX = useSharedValue(0);
     const scrollRef = useAnimatedRef();

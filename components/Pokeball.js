@@ -9,14 +9,30 @@ import Animated, {
     Extrapolate,
     Easing,
 } from "react-native-reanimated";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
+
+const pokeballImage = require("../assets/pokeball.png");
 
 export default function Pokeball({ wrapperStyle, imageStyle, rotating }) {
-    const pokeballImage = useMemo(() => require("../assets/pokeball.png"), []);
-
     // Pokeball Animation
     const pokeballOpacity = useSharedValue(0);
     const pokeballRotation = useSharedValue(0);
+
+    useEffect(() => {
+        if (!rotating) return;
+
+        // Pokeball Animation
+        pokeballOpacity.value = withDelay(
+            200,
+            withTiming(1, { duration: 350, easing: Easing.inOut(Easing.quad) })
+        );
+
+        pokeballRotation.value = withRepeat(
+            withTiming(360, { duration: 4500, easing: Easing.linear }),
+            -1,
+            false
+        );
+    }, []);
 
     ///////////// Pokeball Wrapper Animation /////////////
     const pokeballWrapperAnimatedStyle = useAnimatedStyle(() => {
@@ -44,20 +60,6 @@ export default function Pokeball({ wrapperStyle, imageStyle, rotating }) {
         };
     });
     /////////////////////////////////////////////////////
-
-    useEffect(() => {
-        // Pokeball Animation
-        pokeballOpacity.value = withDelay(
-            200,
-            withTiming(1, { duration: 350, easing: Easing.inOut(Easing.quad) })
-        );
-
-        pokeballRotation.value = withRepeat(
-            withTiming(360, { duration: 4500, easing: Easing.linear }),
-            -1,
-            false
-        );
-    }, [pokeballOpacity, pokeballRotation]);
 
     return (
         <Animated.View
