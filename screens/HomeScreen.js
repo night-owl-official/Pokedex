@@ -1,10 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import { View, StyleSheet, FlatList } from "react-native";
+import { useEffect } from "react";
 
 import PokemonCard from "../components/homeScreen/PokemonCard";
 import Loading from "../components/Loading";
 
 import { getColorByType } from "../utils/pokemonTypeColors";
+import getPokemon from "../networking/getPokemon";
 
 const TempData = [
     {
@@ -132,6 +134,8 @@ const TempData = [
 ];
 
 export default function HomeScreen({ navigation }) {
+    // useEffect(() => {}, []);
+
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
