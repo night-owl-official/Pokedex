@@ -134,7 +134,9 @@ const TempData = [
 ];
 
 export default function HomeScreen({ navigation }) {
-    // useEffect(() => {}, []);
+    // useEffect(() => {
+    //     getPokemon();
+    // }, []);
 
     return (
         <View style={styles.container}>

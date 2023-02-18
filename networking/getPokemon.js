@@ -1,4 +1,6 @@
-const BASE_POKEAPI_URL = "https://pokeapi.co/api/v2/";
+import getPokemonIDbyURL from "../utils/pokeApiHelpers";
+import getPokemonData from "./getPokemonData";
+import { BASE_POKEAPI_URL } from "../utils/pokeApiHelpers";
 
 export default getPokemon = async () => {
     // Fetch the pokemon list
@@ -7,8 +9,14 @@ export default getPokemon = async () => {
 
     const { results } = data;
 
-    // const pokemon = results.map(async pkmn => {
-    //     // Get Pokemon ID
-    //     // Get Pokemon Data
+    // TESTING CODE //
+    // getPokemonData(1).then((data) => console.log(data));
+    /////////////////
+
+    // const pokemon = results.map(async (pkmn) => {
+    //     const pokemonID = getPokemonIDbyURL(pkmn.url);
+    //     // const pokemonData = await getPokemonData(pokemonID);
+
+    //     // return pokemonData;
     // });
 };
