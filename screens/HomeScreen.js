@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, FlatList } from "react-native";
-import { useEffect } from "react";
+import { View, StyleSheet, FlatList, Alert } from "react-native";
+import { useEffect, useState, useCallback } from "react";
 
 import PokemonCard from "../components/homeScreen/PokemonCard";
 import Loading from "../components/Loading";
@@ -134,21 +134,49 @@ const TempData = [
 ];
 
 export default function HomeScreen({ navigation }) {
+    const [pokemonList, setPokemonList] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const loadPokemonList = useCallback(async () => {
+        try {
+            const pokemon = await getPokemon();
+            setPokemonList([...pokemonList, ...pokemon]);
+        } catch (err) {
+            Alert.alert(
+                "Failed to Catch 'em all",
+                "An error has occurred while loading the Pokemon."
+            );
+        } finally {
+            setLoading(false);
+        }
+    }, [pokemonList, loading]);
+
+    useEffect(() => {
+        loadPokemonList();
+    }, []);
+
+    if (loading)
+        return (
+            <View style={styles.container}>
+                <Loading size={80} />
+            </View>
+        );
+
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
 
             <FlatList
                 style={styles.pokemonList}
-                data={TempData}
-                keyExtractor={(data) => data.dexNumber}
+                data={pokemonList}
+                keyExtractor={(data) => data.id}
                 renderItem={({ item }) => {
                     const bgColor = getColorByType(item.types[0]);
 
                     return (
                         <PokemonCard
                             pokemonName={item.name}
-                            pokemonDexNumber={item.dexNumber}
+                            pokemonDexNumber={item.id}
                             pokemonImage={item.image}
                             pokemonTypes={item.types}
                             bgColor={bgColor}
@@ -158,6 +186,11 @@ export default function HomeScreen({ navigation }) {
                                     bgColor: bgColor,
                                 })
                             }
+                            getItemLayout={(data, index) => ({
+                                length: 110,
+                                offset: 110 * index,
+                                index,
+                            })}
                         />
                     );
                 }}
