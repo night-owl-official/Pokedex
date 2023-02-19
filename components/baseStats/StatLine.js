@@ -1,13 +1,17 @@
 import { View, Animated, StyleSheet } from "react-native";
 
+const MAX_POKEMON_STAT = 255;
+const MID_LEVEL_STAT = 80;
+const HIGH_LEVEL_STAT = 100;
+
 export default function StatLine({ value }) {
     return (
         <View style={styles.statLine}>
             <Animated.View
                 style={[
-                    { width: `${value}%` },
-                    value >= 50
-                        ? value < 60
+                    { width: `${(value / MAX_POKEMON_STAT) * 100}%` },
+                    value >= MID_LEVEL_STAT
+                        ? value < HIGH_LEVEL_STAT
                             ? styles.statValueMid
                             : styles.statValueHigh
                         : styles.statValueLow,

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     sectionSubtitle: {
-        width: 100,
+        width: 130,
         color: "#919191",
     },
     sectionText: {

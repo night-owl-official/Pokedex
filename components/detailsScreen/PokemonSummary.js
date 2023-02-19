@@ -132,7 +132,7 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                         {/* Pokemon Dex Number */}
                         <Animated.View style={dexNumberAnimatedStyle}>
                             <Animated.Text style={styles.pokemonDexNumber}>
-                                #{pokemonData.dexNumber}
+                                #{pokemonData.id.toString().padStart(4, "0")}
                             </Animated.Text>
                         </Animated.View>
                     </View>

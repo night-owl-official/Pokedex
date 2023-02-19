@@ -26,7 +26,7 @@ export default function PokemonCard({
 
                 {/* Pokemon Dex Number */}
                 <Animated.Text style={styles.pokedexNumber}>
-                    #{pokemonDexNumber}
+                    #{pokemonDexNumber.toString().padStart(4, "0")}
                 </Animated.Text>
 
                 {/* Pokemon Image */}
