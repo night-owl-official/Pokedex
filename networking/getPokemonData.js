@@ -9,6 +9,8 @@ import {
     isVersionAllowed,
     getCaptureRate,
     getBaseEggSteps,
+    getGenderRates,
+    getStatName,
 } from "../utils/pokeApiHelpers";
 
 export default getPokemonData = async (pkmnID) => {
@@ -22,8 +24,9 @@ export default getPokemonData = async (pkmnID) => {
 
     const [pokemonData, pokemonSpeciesData] = await Promise.all(results);
 
-    // Data Processing
+    // Get data for ability description
 
+    // Data Processing //
     const generaIndex = pokemonSpeciesData.genera.findIndex(
         (genera) => genera.language.name === "en"
     );
@@ -32,6 +35,33 @@ export default getPokemonData = async (pkmnID) => {
         (entry) =>
             entry.language.name === "en" && isVersionAllowed(entry.version.name)
     );
+
+    const typesFormatted = pokemonData.types.map((type) => {
+        return capitalizeFirst(type.type.name);
+    });
+
+    const eggGroupsFormatted = pokemonSpeciesData.egg_groups.map((eggGroup) => {
+        if (eggGroup.name === "no-eggs" || eggGroup.name === "ditto")
+            return "Not Breedable";
+
+        return capitalizeFirst(eggGroup.name);
+    });
+
+    const evYieldFormatted = pokemonData.stats.reduce((acc, curr) => {
+        if (curr.effort > 0) {
+            return [
+                ...acc,
+                { stat: getStatName(curr.stat.name), value: curr.effort },
+            ];
+        }
+
+        return acc;
+    }, []);
+
+    const baseStatsFormatted = pokemonData.stats.map((stat) => {
+        return { name: getStatName(stat.stat.name), value: stat.base_stat };
+    });
+    /////////////////////////////
 
     return {
         id: pokemonData.id,
@@ -46,7 +76,7 @@ export default getPokemonData = async (pkmnID) => {
                 ? pokemonSpeciesData.flavor_text_entries[descriptionIndex]
                       .flavor_text
                 : "",
-        baseExp: pokemonData.base_experience,
+        baseExp: pokemonData.base_experience ? pokemonData.base_experience : 0,
         height: `${decimetersToMeters(
             pokemonData.height
         )} mt (${decimetersToFeet(pokemonData.height)} ft)`,
@@ -56,5 +86,10 @@ export default getPokemonData = async (pkmnID) => {
         baseHappiness: pokemonSpeciesData.base_happiness,
         captureRate: getCaptureRate(pokemonSpeciesData.capture_rate),
         baseEggSteps: getBaseEggSteps(pokemonSpeciesData.hatch_counter),
+        types: typesFormatted,
+        gender: getGenderRates(pokemonSpeciesData.gender_rate),
+        eggGroups: eggGroupsFormatted,
+        evYield: evYieldFormatted,
+        baseStats: baseStatsFormatted,
     };
 };
