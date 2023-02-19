@@ -186,15 +186,15 @@ export default function HomeScreen({ navigation }) {
                                     bgColor: bgColor,
                                 })
                             }
-                            getItemLayout={(data, index) => ({
-                                length: 110,
-                                offset: 110 * index,
-                                index,
-                            })}
                         />
                     );
                 }}
                 numColumns={2}
+                getItemLayout={(data, index) => ({
+                    length: 110,
+                    offset: 110 * index,
+                    index,
+                })}
             />
         </View>
     );
