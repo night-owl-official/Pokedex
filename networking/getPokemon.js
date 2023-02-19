@@ -1,4 +1,4 @@
-import getPokemonIDbyURL from "../utils/pokeApiHelpers";
+import { getIDfromURL } from "../utils/pokeApiHelpers";
 import getPokemonData from "./getPokemonData";
 import { BASE_POKEAPI_URL } from "../utils/pokeApiHelpers";
 
@@ -9,10 +9,10 @@ export default getPokemon = async () => {
 
     const { results } = data;
 
-    // const pokemon = results.map(async (pkmn) => {
-    //     const pokemonID = getIDfromURL(pkmn.url);
-    //     // const pokemonData = await getPokemonData(pokemonID);
+    const pokemon = results.map(async (pkmn) => {
+        const pokemonID = getIDfromURL(pkmn.url);
+        return await getPokemonData(pokemonID);
+    });
 
-    //     // return pokemonData;
-    // });
+    return await Promise.all(pokemon);
 };

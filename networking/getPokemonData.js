@@ -92,8 +92,10 @@ export default getPokemonData = async (pkmnID) => {
         return {
             name: camelCaseString(ability.ability.name),
             description:
-                abilitiesData[index].effect_entries[abilityDescIndex]
-                    .short_effect,
+                abilityDescIndex > -1
+                    ? abilitiesData[index].effect_entries[abilityDescIndex]
+                          .short_effect
+                    : "Missing Data",
             type: getAbilityTypeName(ability.slot),
         };
     });
@@ -111,7 +113,7 @@ export default getPokemonData = async (pkmnID) => {
             descriptionIndex > -1
                 ? pokemonSpeciesData.flavor_text_entries[descriptionIndex]
                       .flavor_text
-                : "",
+                : "Missing Data",
         baseExp: pokemonData.base_experience ? pokemonData.base_experience : 0,
         height: `${decimetersToMeters(
             pokemonData.height
