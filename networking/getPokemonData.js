@@ -1,6 +1,6 @@
 import {
     BASE_POKEAPI_URL,
-    capitalizeFirst,
+    camelCaseString,
     decimetersToMeters,
     decimetersToFeet,
     hectogramsToKilograms,
@@ -11,20 +11,42 @@ import {
     getBaseEggSteps,
     getGenderRates,
     getStatName,
+    getIDfromURL,
+    getAbilityTypeName,
 } from "../utils/pokeApiHelpers";
 
 export default getPokemonData = async (pkmnID) => {
     // Get data for pokemon and pokemon species
-    const results = (
+    const pokeResults = (
         await Promise.all([
             fetch(`${BASE_POKEAPI_URL}pokemon/${pkmnID}`),
             fetch(`${BASE_POKEAPI_URL}/pokemon-species/${pkmnID}`),
         ])
     ).map((r) => r.json());
 
-    const [pokemonData, pokemonSpeciesData] = await Promise.all(results);
+    const [pokemonData, pokemonSpeciesData] = await Promise.all(pokeResults);
 
     // Get data for ability description
+    let previousID = "";
+    const abilityIDs = pokemonData.abilities.reduce((acc, curr) => {
+        let currentID = getIDfromURL(curr.ability.url);
+        if (currentID !== previousID) {
+            previousID = currentID;
+            return [...acc, currentID];
+        }
+
+        return acc;
+    }, []);
+
+    const abilityFetches = abilityIDs.map((abilityID) => {
+        return fetch(`${BASE_POKEAPI_URL}ability/${abilityID}`);
+    });
+
+    const abilityResults = (await Promise.all(abilityFetches)).map((r) =>
+        r.json()
+    );
+
+    const abilitiesData = await Promise.all(abilityResults);
 
     // Data Processing //
     const generaIndex = pokemonSpeciesData.genera.findIndex(
@@ -37,14 +59,14 @@ export default getPokemonData = async (pkmnID) => {
     );
 
     const typesFormatted = pokemonData.types.map((type) => {
-        return capitalizeFirst(type.type.name);
+        return camelCaseString(type.type.name);
     });
 
     const eggGroupsFormatted = pokemonSpeciesData.egg_groups.map((eggGroup) => {
         if (eggGroup.name === "no-eggs" || eggGroup.name === "ditto")
             return "Not Breedable";
 
-        return capitalizeFirst(eggGroup.name);
+        return camelCaseString(eggGroup.name);
     });
 
     const evYieldFormatted = pokemonData.stats.reduce((acc, curr) => {
@@ -61,11 +83,25 @@ export default getPokemonData = async (pkmnID) => {
     const baseStatsFormatted = pokemonData.stats.map((stat) => {
         return { name: getStatName(stat.stat.name), value: stat.base_stat };
     });
+
+    const abilitiesFormatted = pokemonData.abilities.map((ability, index) => {
+        const abilityDescIndex = abilitiesData[index].effect_entries.findIndex(
+            (effect) => effect.language.name === "en"
+        );
+
+        return {
+            name: camelCaseString(ability.ability.name),
+            description:
+                abilitiesData[index].effect_entries[abilityDescIndex]
+                    .short_effect,
+            type: getAbilityTypeName(ability.slot),
+        };
+    });
     /////////////////////////////
 
     return {
         id: pokemonData.id,
-        name: capitalizeFirst(pokemonData.name),
+        name: camelCaseString(pokemonData.name),
         image: getPokemonImagebyID(pkmnID),
         genera:
             generaIndex > -1
@@ -91,5 +127,6 @@ export default getPokemonData = async (pkmnID) => {
         eggGroups: eggGroupsFormatted,
         evYield: evYieldFormatted,
         baseStats: baseStatsFormatted,
+        abilities: abilitiesFormatted,
     };
 };

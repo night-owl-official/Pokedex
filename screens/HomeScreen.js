@@ -134,10 +134,6 @@ const TempData = [
 ];
 
 export default function HomeScreen({ navigation }) {
-    // useEffect(() => {
-    //     getPokemon();
-    // }, []);
-
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />

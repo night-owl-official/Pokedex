@@ -9,12 +9,8 @@ export default getPokemon = async () => {
 
     const { results } = data;
 
-    // TESTING CODE //
-    getPokemonData(3).then((data) => console.log(data));
-    /////////////////
-
     // const pokemon = results.map(async (pkmn) => {
-    //     const pokemonID = getPokemonIDbyURL(pkmn.url);
+    //     const pokemonID = getIDfromURL(pkmn.url);
     //     // const pokemonData = await getPokemonData(pokemonID);
 
     //     // return pokemonData;
