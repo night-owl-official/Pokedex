@@ -1,6 +1,6 @@
 export const BASE_POKEAPI_URL = "https://pokeapi.co/api/v2/";
 
-export function getPokemonIDbyURL(url) {
+export function getIDfromURL(url) {
     return url.split("/")[6];
 }
 
@@ -8,8 +8,13 @@ export function getPokemonImagebyID(id) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 }
 
-export function capitalizeFirst(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+export function camelCaseString(str) {
+    const words = str.split("-");
+    const capitalizedWords = words.map(
+        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+    );
+
+    return capitalizedWords.join(" ").trim();
 }
 
 export function isVersionAllowed(version) {
@@ -81,6 +86,19 @@ export function getStatName(stat) {
             return "Sp. Def";
         case "speed":
             return "Speed";
+        default:
+            return "";
+    }
+}
+
+export function getAbilityTypeName(type) {
+    switch (type) {
+        case 1:
+            return "Ability 1";
+        case 2:
+            return "Ability 2";
+        case 3:
+            return "Hidden";
         default:
             return "";
     }
