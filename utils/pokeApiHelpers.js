@@ -5,7 +5,7 @@ export function getPokemonIDbyURL(url) {
 }
 
 export function getPokemonImagebyID(id) {
-    return `"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png"`;
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 }
 
 export function capitalizeFirst(str) {
@@ -45,4 +45,43 @@ export function getCaptureRate(value) {
 
 export function getBaseEggSteps(value) {
     return 255 * value + value;
+}
+
+export function getGenderRates(rateInEighths) {
+    const gender = [];
+
+    if (rateInEighths === -1) {
+        gender.push({ gender: "Genderless", rate: 0 });
+
+        return gender;
+    }
+
+    const femalePercentage = (rateInEighths / 8) * 100;
+    const malePercentage = 100 - femalePercentage;
+
+    gender.push(
+        { gender: "Male", rate: malePercentage },
+        { gender: "Female", rate: femalePercentage }
+    );
+
+    return gender;
+}
+
+export function getStatName(stat) {
+    switch (stat) {
+        case "hp":
+            return "HP";
+        case "attack":
+            return "Attack";
+        case "defense":
+            return "Defense";
+        case "special-attack":
+            return "Sp. Atk";
+        case "special-defense":
+            return "Sp. Def";
+        case "speed":
+            return "Speed";
+        default:
+            return "";
+    }
 }
