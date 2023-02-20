@@ -5,10 +5,10 @@ export default function BaseStats({ pokemonData }) {
     return (
         <>
             <StatsView stats={pokemonData.baseStats} />
-            {/* <TypeEffectiveness
+            <TypeEffectiveness
                 pokemonName={pokemonData.name}
-                effectivenessList={pokemonData.typeEffectiveness}
-            /> */}
+                pokemonTypes={pokemonData.types}
+            />
         </>
     );
 }
