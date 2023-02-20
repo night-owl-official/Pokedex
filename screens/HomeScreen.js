@@ -231,7 +231,7 @@ export default function HomeScreen({ navigation }) {
                 ListFooterComponent={ListFooterLoading}
                 ListFooterComponentStyle={{ marginVertical: 8 }}
                 removeClippedSubviews={true}
-                initialNumToRender={10}
+                initialNumToRender={5}
             />
         </View>
     );
