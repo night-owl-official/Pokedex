@@ -8,6 +8,8 @@ import Loading from "../components/Loading";
 import { getColorByType } from "../utils/pokemonTypeColors";
 import getPokemon from "../networking/getPokemon";
 
+const API_OFFSET = 20;
+
 const TempData = [
     {
         id: 1,
@@ -135,27 +137,48 @@ const TempData = [
 
 export default function HomeScreen({ navigation }) {
     const [pokemonList, setPokemonList] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState({
+        initial: true,
+        further: false,
+    });
+    const [offset, setOffset] = useState(0);
+    const [offsetMultiplier, setOffsetMultiplier] = useState(1);
+    const [
+        onEndReachedCalledDuringMomentum,
+        setOnEndReachedCalledDuringMomentum,
+    ] = useState(false);
 
     const loadPokemonList = useCallback(async () => {
         try {
-            const pokemon = await getPokemon();
+            setLoading({ ...loading, further: true });
+
+            const pokemon = await getPokemon(offset);
+
             setPokemonList([...pokemonList, ...pokemon]);
+
+            setOffset(API_OFFSET * offsetMultiplier);
+            setOffsetMultiplier((offsetMultiplier) => offsetMultiplier + 1);
         } catch (err) {
             Alert.alert(
                 "Failed to Catch 'em all",
                 "An error has occurred while loading the Pokemon."
             );
         } finally {
-            setLoading(false);
+            setLoading({ initial: false, further: false });
         }
-    }, [pokemonList, loading]);
+    }, [pokemonList, loading.initial, loading.further, offset]);
 
     useEffect(() => {
         loadPokemonList();
     }, []);
 
-    if (loading)
+    const ListFooterLoading = () => {
+        if (loading.further) return <Loading size={40} />;
+
+        return <></>;
+    };
+
+    if (loading.initial)
         return (
             <View style={styles.container}>
                 <Loading size={80} />
@@ -190,11 +213,25 @@ export default function HomeScreen({ navigation }) {
                     );
                 }}
                 numColumns={2}
-                getItemLayout={(data, index) => ({
+                getItemLayout={(_, index) => ({
                     length: 110,
                     offset: 110 * index,
                     index,
                 })}
+                onMomentumScrollBegin={() => {
+                    setOnEndReachedCalledDuringMomentum(false);
+                }}
+                onEndReachedThreshold={0.01}
+                onEndReached={() => {
+                    if (!onEndReachedCalledDuringMomentum && !loading.further) {
+                        loadPokemonList();
+                        setOnEndReachedCalledDuringMomentum(true);
+                    }
+                }}
+                ListFooterComponent={ListFooterLoading}
+                ListFooterComponentStyle={{ marginVertical: 8 }}
+                removeClippedSubviews={true}
+                initialNumToRender={10}
             />
         </View>
     );
