@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     abilityButtonsContainer: {
-        flex: 1,
+        width: 290,
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 16,
