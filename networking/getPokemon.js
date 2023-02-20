@@ -2,9 +2,10 @@ import { getIDfromURL } from "../utils/pokeApiHelpers";
 import getPokemonData from "./getPokemonData";
 import { BASE_POKEAPI_URL } from "../utils/pokeApiHelpers";
 
-export default getPokemon = async () => {
+export default getPokemon = async (offset = 0, limit = 20) => {
     // Fetch the pokemon list
-    const apiResponse = await fetch(`${BASE_POKEAPI_URL}pokemon`);
+    const queryString = `?limit=${limit}&offset=${offset}`;
+    const apiResponse = await fetch(`${BASE_POKEAPI_URL}pokemon${queryString}`);
     const data = await apiResponse.json();
 
     const { results } = data;
