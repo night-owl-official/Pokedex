@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         paddingVertical: 8,
         paddingHorizontal: 10,
-        marginBottom: 16,
+        marginBottom: 12,
         marginRight: 4,
     },
     typeEffectivenessIcon: {
