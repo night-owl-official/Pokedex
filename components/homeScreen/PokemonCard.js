@@ -1,5 +1,6 @@
-import { Animated, Image, StyleSheet } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
+import CachedImage from "expo-cached-image";
 
 import Pokeball from "../Pokeball";
 import PokemonTypes from "../PokemonTypes";
@@ -30,7 +31,8 @@ export default function PokemonCard({
                 </Animated.Text>
 
                 {/* Pokemon Image */}
-                <Image
+                <CachedImage
+                    cacheKey={`${pokemonDexNumber}-img`}
                     style={styles.pokemonImage}
                     source={{ uri: pokemonImage }}
                 />

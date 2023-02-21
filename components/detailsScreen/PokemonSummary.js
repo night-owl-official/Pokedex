@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
@@ -8,6 +8,7 @@ import Animated, {
     Extrapolate,
     Easing,
 } from "react-native-reanimated";
+import CachedImage from "expo-cached-image";
 
 import Pokeball from "../Pokeball";
 import PokemonTypes from "../PokemonTypes";
@@ -167,7 +168,8 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                         animatedImageWrapperStyle,
                     ]}
                 >
-                    <Image
+                    <CachedImage
+                        cacheKey={`${pokemonData.id}-img`}
                         style={styles.pokemonImage}
                         source={{ uri: pokemonData.image }}
                     />
