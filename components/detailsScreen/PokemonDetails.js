@@ -26,7 +26,7 @@ let headerHeight = 0;
 const tabs = [
     { name: "About", slide: About },
     { name: "Base Stats", slide: BaseStats },
-    // { name: "Evolutions", slide: Evolutions },
+    { name: "Evolutions", slide: Evolutions },
     // { name: "Moves", slide: Moves },
 ];
 

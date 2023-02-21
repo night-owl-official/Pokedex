@@ -1,8 +1,35 @@
-import { View, StyleSheet, Animated, ScrollView } from "react-native";
+import { View, StyleSheet, Animated, ScrollView, Alert } from "react-native";
+import { useEffect, useState } from "react";
+
+import getEvolutionChain from "../../networking/getEvolutionChain";
 
 import EvolutionSection from "../evolutions/EvolutionSection";
+import Loading from "../Loading";
 
 export default function Evolutions({ pokemonData }) {
+    const [evolutionChain, setEvolutionChain] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadEvolutionChain = async (pkmnID) => {
+            try {
+                const evolutionChainData = await getEvolutionChain(pkmnID);
+                setEvolutionChain(evolutionChainData);
+            } catch (err) {
+                Alert.alert(
+                    "Failed to see Evolution Chain",
+                    "There was an error while loading the evolution chain data"
+                );
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadEvolutionChain(pokemonData.id);
+    }, []);
+
+    if (loading) return <Loading size={40} />;
+
     return (
         <>
             {/* Title */}
@@ -11,24 +38,22 @@ export default function Evolutions({ pokemonData }) {
             </Animated.Text>
 
             {/* Check if there are any evolutions */}
-            {pokemonData.evolutionChain.first ? (
+            {evolutionChain.first ? (
                 <ScrollView
                     style={styles.scrollableContainer}
                     showsVerticalScrollIndicator={false}
                     scrollEnabled={
-                        pokemonData.evolutionChain.first.length +
-                            pokemonData.evolutionChain.second.length >
+                        evolutionChain.first.length +
+                            evolutionChain.second.length >
                         3
                     }
                 >
                     {/* First Evolution section (Could have none or more) */}
-                    {pokemonData.evolutionChain.first.map((first, index) => (
+                    {evolutionChain.first.map((first, index) => (
                         <EvolutionSection
                             key={index}
-                            firstName={pokemonData.evolutionChain.base.name}
-                            firstImageURL={
-                                pokemonData.evolutionChain.base.image
-                            }
+                            firstName={evolutionChain.base.name}
+                            firstImageURL={evolutionChain.base.image}
                             evolveLevel={first.minLevel}
                             secondName={first.name}
                             secondImageURL={first.image}
@@ -36,24 +61,17 @@ export default function Evolutions({ pokemonData }) {
                     ))}
 
                     {/* Second Evolution section (Could have none or more) */}
-                    {pokemonData.evolutionChain.second &&
-                        pokemonData.evolutionChain.second.map(
-                            (second, index) => (
-                                <EvolutionSection
-                                    key={index}
-                                    firstName={
-                                        pokemonData.evolutionChain.first[0].name
-                                    }
-                                    firstImageURL={
-                                        pokemonData.evolutionChain.first[0]
-                                            .image
-                                    }
-                                    evolveLevel={second.minLevel}
-                                    secondName={second.name}
-                                    secondImageURL={second.image}
-                                />
-                            )
-                        )}
+                    {evolutionChain.second &&
+                        evolutionChain.second.map((second, index) => (
+                            <EvolutionSection
+                                key={index}
+                                firstName={evolutionChain.first[0].name}
+                                firstImageURL={evolutionChain.first[0].image}
+                                evolveLevel={second.minLevel}
+                                secondName={second.name}
+                                secondImageURL={second.image}
+                            />
+                        ))}
                 </ScrollView>
             ) : (
                 <View style={styles.container}>

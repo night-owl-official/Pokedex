@@ -7,7 +7,7 @@ export default function MinLevel({ level }) {
             <Icon name={"arrow-right"} size={20} color={"#919191"} />
 
             <Animated.Text style={styles.text}>
-                {level > 0 ? `Level ${level}` : ""}
+                {level > 0 ? `Level ${level}` : "Sp. Condition"}
             </Animated.Text>
         </View>
     );
