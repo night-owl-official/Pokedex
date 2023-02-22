@@ -22,9 +22,21 @@ export function isVersionAllowed(version) {
         version === "scarlet" ||
         version === "legends-arceus" ||
         version === "shield" ||
+        version === "moon" ||
         version === "emerald" ||
         version === "soulsilver" ||
         version === "white"
+    );
+}
+
+export function isVersionGroupAllowed(versionGroup) {
+    return (
+        versionGroup === "scarlet-violet" ||
+        versionGroup === "sword-shield" ||
+        versionGroup === "sun-moon" ||
+        versionGroup === "emerald" ||
+        versionGroup === "heartgold-soulsilver" ||
+        versionGroup === "black-white"
     );
 }
 
@@ -99,6 +111,34 @@ export function getAbilityTypeName(type) {
             return "Ability 2";
         case 3:
             return "Hidden";
+        default:
+            return "";
+    }
+}
+
+export function getMoveLearnCondition(method, lvl) {
+    switch (method) {
+        case "level-up":
+            return `Level ${lvl}`;
+        case "egg":
+            return "Egg Move";
+        case "tutor":
+            return "Move Tutor";
+        case "machine":
+            return "TM";
+        default:
+            return "";
+    }
+}
+
+export function getMoveCategory(category) {
+    switch (category) {
+        case "special":
+            return "specialAttack";
+        case "physical":
+            return "physicalAttack";
+        case "status":
+            return "statusAttack";
         default:
             return "";
     }
