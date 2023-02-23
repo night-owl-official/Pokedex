@@ -1,31 +1,45 @@
 import getMoveData from "./getMoveData";
 import { BASE_POKEAPI_URL, getIDfromURL } from "../utils/pokeApiHelpers";
 
-export default getMoves = async (pokemonID) => {
+export default getMoves = async (
+    pokemonID,
+    offset = 0,
+    latestMovesVersion = "",
+    limit = 10
+) => {
     // Fetch the pokemon data
     const pokemonApiResponse = await fetch(
         `${BASE_POKEAPI_URL}pokemon/${pokemonID}`
     );
     const pokemonData = await pokemonApiResponse.json();
 
-    // Get the latest game version where the Pokemon was last featured in
-    let latestVersionIndex = -1;
-    let biggestLength = 0;
-    for (let i = 0; i < pokemonData.moves.length; ++i) {
-        const currentLength = pokemonData.moves[i].version_group_details.length;
+    let latestVersionName = latestMovesVersion;
 
-        if (biggestLength < currentLength) {
-            biggestLength = currentLength;
-            latestVersionIndex = i;
+    if (latestVersionName === "") {
+        // Get the latest game version where the Pokemon was last featured in
+        let latestVersionIndex = -1;
+        let biggestLength = 0;
+        for (let i = 0; i < pokemonData.moves.length; ++i) {
+            const currentLength =
+                pokemonData.moves[i].version_group_details.length;
+
+            if (biggestLength < currentLength) {
+                biggestLength = currentLength;
+                latestVersionIndex = i;
+            }
         }
+
+        latestVersionName =
+            pokemonData.moves[latestVersionIndex].version_group_details[
+                biggestLength - 1
+            ].version_group.name;
     }
 
-    const latestVersionName =
-        pokemonData.moves[latestVersionIndex].version_group_details[
-            biggestLength - 1
-        ].version_group.name;
+    // Get moves array starting at offset and ending at offset + limit
+    // This is done to reduce the returned payload size
+    const movesPortion = pokemonData.moves.slice(offset, offset + limit);
 
-    const moves = await pokemonData.moves.reduce(async (acc, curr) => {
+    const moves = await movesPortion.reduce(async (acc, curr) => {
         const accumulator = await acc;
 
         const resultIndex = curr.version_group_details.findIndex(
@@ -47,5 +61,5 @@ export default getMoves = async (pokemonID) => {
         return accumulator;
     }, []);
 
-    return await Promise.all(moves);
+    return { moves: await Promise.all(moves), version: latestVersionName };
 };
