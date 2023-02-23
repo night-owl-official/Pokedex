@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { View, StyleSheet, FlatList, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useEffect, useState, useCallback } from "react";
+import { FlashList } from "@shopify/flash-list";
 
 import PokemonCard from "../components/homeScreen/PokemonCard";
 import Loading from "../components/Loading";
@@ -64,51 +65,49 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.container}>
             <StatusBar style="auto" />
 
-            <FlatList
-                style={styles.pokemonList}
-                data={pokemonList}
-                keyExtractor={(data) => data.id}
-                renderItem={({ item }) => {
-                    const bgColor = getColorByType(item.types[0]);
+            <View style={styles.pokemonList}>
+                <FlashList
+                    data={pokemonList}
+                    keyExtractor={(data) => data.id}
+                    renderItem={({ item }) => {
+                        const bgColor = getColorByType(item.types[0]);
 
-                    return (
-                        <PokemonCard
-                            pokemonName={item.name}
-                            pokemonDexNumber={item.id}
-                            pokemonImage={item.image}
-                            pokemonTypes={item.types}
-                            bgColor={bgColor}
-                            onPress={() =>
-                                navigation.navigate("Details", {
-                                    pokemonData: item,
-                                    bgColor: bgColor,
-                                })
-                            }
-                        />
-                    );
-                }}
-                numColumns={2}
-                getItemLayout={(_, index) => ({
-                    length: 110,
-                    offset: 110 * index,
-                    index,
-                })}
-                onMomentumScrollBegin={() => {
-                    setOnEndReachedCalledDuringMomentum(false);
-                }}
-                onEndReachedThreshold={0.01}
-                onEndReached={() => {
-                    if (!onEndReachedCalledDuringMomentum && !loading.further) {
-                        loadPokemonList();
-                        setOnEndReachedCalledDuringMomentum(true);
-                    }
-                }}
-                ListFooterComponent={ListFooterLoading}
-                ListFooterComponentStyle={{ marginVertical: 8 }}
-                removeClippedSubviews={true}
-                initialNumToRender={5}
-                showsVerticalScrollIndicator={false}
-            />
+                        return (
+                            <PokemonCard
+                                pokemonName={item.name}
+                                pokemonDexNumber={item.id}
+                                pokemonImage={item.image}
+                                pokemonTypes={item.types}
+                                bgColor={bgColor}
+                                onPress={() =>
+                                    navigation.navigate("Details", {
+                                        pokemonData: item,
+                                        bgColor: bgColor,
+                                    })
+                                }
+                            />
+                        );
+                    }}
+                    numColumns={2}
+                    estimatedItemSize={110}
+                    onMomentumScrollBegin={() => {
+                        setOnEndReachedCalledDuringMomentum(false);
+                    }}
+                    onEndReachedThreshold={0.01}
+                    onEndReached={() => {
+                        if (
+                            !onEndReachedCalledDuringMomentum &&
+                            !loading.further
+                        ) {
+                            loadPokemonList();
+                            setOnEndReachedCalledDuringMomentum(true);
+                        }
+                    }}
+                    ListFooterComponent={ListFooterLoading}
+                    ListFooterComponentStyle={{ marginVertical: 8 }}
+                    showsVerticalScrollIndicator={false}
+                />
+            </View>
         </View>
     );
 }
