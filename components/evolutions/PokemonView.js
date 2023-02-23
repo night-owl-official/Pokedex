@@ -1,5 +1,7 @@
 import { View, Animated, Image, StyleSheet } from "react-native";
 
+import CachedImage from "react-native-expo-cached-image";
+
 import Pokeball from "../Pokeball";
 
 export default function PokemonView({ name, imageURL }) {
@@ -12,7 +14,7 @@ export default function PokemonView({ name, imageURL }) {
             />
 
             {/* Pokemon Image */}
-            <Image
+            <CachedImage
                 style={styles.pokemonImage}
                 source={{
                     uri: imageURL,

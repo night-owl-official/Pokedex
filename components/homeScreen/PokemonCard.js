@@ -1,9 +1,10 @@
 import { Animated, StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
-import CachedImage from "expo-cached-image";
+import CachedImage from "react-native-expo-cached-image";
 
 import Pokeball from "../Pokeball";
 import PokemonTypes from "../PokemonTypes";
+import { memo } from "react";
 
 export default function PokemonCard({
     pokemonName,
@@ -13,6 +14,8 @@ export default function PokemonCard({
     bgColor,
     onPress,
 }) {
+    const MemoizedPokeball = memo(Pokeball);
+
     return (
         <Animated.View style={styles.container}>
             {/* Tappable Button */}
@@ -32,12 +35,11 @@ export default function PokemonCard({
 
                 {/* Pokemon Image */}
                 <CachedImage
-                    cacheKey={`${pokemonDexNumber}-img`}
                     style={styles.pokemonImage}
                     source={{ uri: pokemonImage }}
                 />
 
-                <Pokeball
+                <MemoizedPokeball
                     wrapperStyle={styles.pokeballImageWrapper}
                     imageStyle={styles.pokeballImage}
                 />

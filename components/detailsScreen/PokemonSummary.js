@@ -8,7 +8,7 @@ import Animated, {
     Extrapolate,
     Easing,
 } from "react-native-reanimated";
-import CachedImage from "expo-cached-image";
+import CachedImage from "react-native-expo-cached-image";
 
 import Pokeball from "../Pokeball";
 import PokemonTypes from "../PokemonTypes";
@@ -169,7 +169,6 @@ export default function PokemonSummary({ pokemonData, translateY }) {
                     ]}
                 >
                     <CachedImage
-                        cacheKey={`${pokemonData.id}-img`}
                         style={styles.pokemonImage}
                         source={{ uri: pokemonData.image }}
                     />
