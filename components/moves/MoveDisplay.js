@@ -7,40 +7,44 @@ import MoveStat from "./MoveStat";
 
 export default function MoveDisplay({ move }) {
     return (
-        <View style={styles.shadowContainer}>
-            <Animated.Text style={styles.heading}>{move.name}</Animated.Text>
+        <View style={styles.container}>
+            <View style={styles.shadowContainer}>
+                <Animated.Text style={styles.heading}>
+                    {move.name}
+                </Animated.Text>
 
-            <Animated.Text>{move.description}</Animated.Text>
+                <Animated.Text>{move.description}</Animated.Text>
 
-            <Animated.Text style={styles.moveLearnCondition}>
-                {move.learnCondition}
-            </Animated.Text>
+                <Animated.Text style={styles.moveLearnCondition}>
+                    {move.learnCondition}
+                </Animated.Text>
 
-            <View style={styles.moveInfoContainer}>
-                <View style={styles.moveStatsContainer}>
-                    <MoveStat title={"Power"} value={move.power} />
-                    <MoveStat title={"Accuracy"} value={move.accuracy} />
-                    <MoveStat title={"Effect %"} value={move.effect} />
-                </View>
+                <View style={styles.moveInfoContainer}>
+                    <View style={styles.moveStatsContainer}>
+                        <MoveStat title={"Power"} value={move.power} />
+                        <MoveStat title={"Accuracy"} value={move.accuracy} />
+                        <MoveStat title={"Effect %"} value={move.effect} />
+                    </View>
 
-                {/* Move Icons */}
-                <View style={styles.moveIconsContainer}>
-                    {/* Move Category Icon */}
-                    <Image
-                        style={styles.moveIcon}
-                        source={getMoveIconByType(move.category)}
-                    />
+                    {/* Move Icons */}
+                    <View style={styles.moveIconsContainer}>
+                        {/* Move Category Icon */}
+                        <Image
+                            style={styles.moveIcon}
+                            source={getMoveIconByType(move.category)}
+                        />
 
-                    {/* Move Type Icon */}
-                    <Image
-                        style={[
-                            styles.moveIcon,
-                            {
-                                tintColor: getColorByType(move.type),
-                            },
-                        ]}
-                        source={getTypeIconByType(move.type)}
-                    />
+                        {/* Move Type Icon */}
+                        <Image
+                            style={[
+                                styles.moveIcon,
+                                {
+                                    tintColor: getColorByType(move.type),
+                                },
+                            ]}
+                            source={getTypeIconByType(move.type)}
+                        />
+                    </View>
                 </View>
             </View>
         </View>
@@ -48,6 +52,9 @@ export default function MoveDisplay({ move }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+    },
     shadowContainer: {
         flexDirection: "column",
         padding: 24,
