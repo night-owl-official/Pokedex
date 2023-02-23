@@ -1,10 +1,15 @@
-import { Animated, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import CachedImage from "react-native-expo-cached-image";
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withTiming,
+} from "react-native-reanimated";
 
 import Pokeball from "../Pokeball";
 import PokemonTypes from "../PokemonTypes";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 export default function PokemonCard({
     pokemonName,
@@ -16,8 +21,21 @@ export default function PokemonCard({
 }) {
     const MemoizedPokeball = memo(Pokeball);
 
+    // Animate opacity on load //
+    const opacity = useSharedValue(0);
+    const opacityAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            opacity: opacity.value,
+        };
+    }, []);
+    ////////////////////////////
+
+    useEffect(() => {
+        opacity.value = withTiming(1, { duration: 600 });
+    }, []);
+
     return (
-        <Animated.View style={styles.container}>
+        <Animated.View style={[styles.container, opacityAnimatedStyle]}>
             {/* Tappable Button */}
             <RectButton
                 style={[styles.button, { backgroundColor: bgColor }]}
