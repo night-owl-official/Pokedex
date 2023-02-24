@@ -12,6 +12,7 @@ import Animated, {
     interpolateColor,
     Extrapolate,
 } from "react-native-reanimated";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 import About from "../tabs/About";
 import BaseStats from "../tabs/BaseStats";
@@ -29,8 +30,16 @@ const TAB_BUTTON_WIDTH = (width - 48) / 4;
 const POKEMON_SUMMARY_HEIGHT = 360;
 let headerHeight = 0;
 
-export default function PokemonDetails({ pokemonData, translateY }) {
+export default function PokemonDetails({
+    pokemonData,
+    translateY,
+    panGesture,
+}) {
     headerHeight = useHeaderHeight();
+
+    // Enables co-operation of gestures and native gestures on Android
+    const scrollGesture =
+        Gesture.Native().simultaneousWithExternalGesture(panGesture);
 
     const translateX = useSharedValue(0);
     const scrollRef = useAnimatedRef();
@@ -119,24 +128,29 @@ export default function PokemonDetails({ pokemonData, translateY }) {
                 />
             </View>
 
-            <Animated.ScrollView
-                ref={scrollRef}
-                onScroll={scrollHandler}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                pagingEnabled={true}
-                bounces={false}
-            >
-                {tabs.map((tab, index) => {
-                    const Tab = tab.slide;
+            <GestureDetector gesture={scrollGesture}>
+                <Animated.ScrollView
+                    ref={scrollRef}
+                    onScroll={scrollHandler}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    pagingEnabled={true}
+                    bounces={false}
+                >
+                    {tabs.map((tab, index) => {
+                        const Tab = tab.slide;
 
-                    return (
-                        <View key={index} style={styles.tabWrapper}>
-                            <Tab pokemonData={pokemonData} />
-                        </View>
-                    );
-                })}
-            </Animated.ScrollView>
+                        return (
+                            <View key={index} style={styles.tabWrapper}>
+                                <Tab
+                                    pokemonData={pokemonData}
+                                    panGesture={panGesture}
+                                />
+                            </View>
+                        );
+                    })}
+                </Animated.ScrollView>
+            </GestureDetector>
         </Animated.View>
     );
 }

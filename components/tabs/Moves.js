@@ -1,7 +1,6 @@
 import { View, StyleSheet, Alert } from "react-native";
 import { useEffect, useState, useCallback } from "react";
-
-import { FlashList } from "@shopify/flash-list";
+import { FlatList } from "react-native-gesture-handler";
 
 import getMoves from "../../networking/getMoves";
 
@@ -63,27 +62,36 @@ export default function Moves({ pokemonData }) {
     if (loading.initial) return <Loading size={40} />;
 
     return (
-        <View style={styles.moveList}>
-            <FlashList
-                data={moves}
-                keyExtractor={(data) => data.id}
-                renderItem={({ item }) => <MoveDisplay move={item} />}
-                estimatedItemSize={226}
-                onMomentumScrollBegin={() => {
-                    setOnEndReachedCalledDuringMomentum(false);
-                }}
-                onEndReachedThreshold={0.01}
-                onEndReached={() => {
-                    if (!onEndReachedCalledDuringMomentum && !loading.further) {
-                        loadMoves();
-                        setOnEndReachedCalledDuringMomentum(true);
-                    }
-                }}
-                ListFooterComponent={ListFooterLoading}
-                ListFooterComponentStyle={{ marginVertical: 8 }}
-                showsVerticalScrollIndicator={false}
-            />
-        </View>
+        // <View style={styles.moveList}>
+        <FlatList
+            style={styles.moveList}
+            data={moves}
+            keyExtractor={(data) => data.id}
+            renderItem={({ item }) => <MoveDisplay move={item} />}
+            initialNumToRender={5}
+            getItemLayout={(_, index) => ({
+                length: 226,
+                offset: 226 * index,
+                index,
+            })}
+            onMomentumScrollBegin={() => {
+                setOnEndReachedCalledDuringMomentum(false);
+            }}
+            onEndReachedThreshold={0.01}
+            onEndReached={() => {
+                if (!onEndReachedCalledDuringMomentum && !loading.further) {
+                    loadMoves();
+                    setOnEndReachedCalledDuringMomentum(true);
+                }
+            }}
+            ListFooterComponent={ListFooterLoading}
+            ListFooterComponentStyle={{
+                marginVertical: 8,
+            }}
+            showsVerticalScrollIndicator={false}
+            removeClippedSubviews={true}
+        />
+        // </View>
     );
 }
 

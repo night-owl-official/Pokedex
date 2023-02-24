@@ -90,6 +90,7 @@ export default function DetailScreen({ route }) {
                             <PokemonDetails
                                 pokemonData={pokemon}
                                 translateY={translateY}
+                                panGesture={panGesture}
                             />
                         </Animated.View>
                     </GestureDetector>
